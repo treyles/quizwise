@@ -1,0 +1,19 @@
+$primary-bg: dodgerBlue;
+
+body {
+  font-family: sans-serif;
+  background-color: $primary-bg;
+  padding: 0;
+  margin: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
