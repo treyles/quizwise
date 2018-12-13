@@ -33,6 +33,22 @@ module.exports = {
           fallback: 'style-loader',
           use: 'css-loader!postcss-loader!sass-loader'
         })
+      },
+      {
+        test: /\.woff$/,
+        loader: 'url-loader'
+      },
+      {
+        test: /\.(png|jpg|svg|mp4)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+              outputPath: 'assets/'
+            }
+          }
+        ]
       }
     ]
   },

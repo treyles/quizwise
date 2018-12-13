@@ -1,4 +1,3 @@
-/* eslint-disable */
 import axios from 'axios';
 import { FETCH_CARDS, DELETE_CARD } from './types';
 

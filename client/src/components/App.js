@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Collection from './Collection';
 import Study from './Study';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
-import { fetchCards } from '../actions/';
+// import { fetchCards } from '../actions/';
 
 class App extends React.Component {
-  componentWillMount() {
-    this.props.fetchCards();
-  }
+  // componentWillMount() {
+  //   this.props.fetchCards();
+  // }
 
   render() {
     return (
@@ -24,8 +24,9 @@ class App extends React.Component {
   }
 }
 
-App.propTypes = {
-  fetchCards: PropTypes.func.isRequired
-};
+// App.propTypes = {
+//   fetchCards: PropTypes.func.isRequired
+// };
 
-export default connect(null, { fetchCards })(App);
+// export default connect(null, { fetchCards })(App);
+export default App;

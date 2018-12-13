@@ -1,10 +1,36 @@
 $primary-bg: dodgerBlue;
+$primary-bg-dark: #5a6373;
+$primary-bg-darkL: #626c7d;
+
+$start-button: #72b4a6;
+
+// text colors
+$text-light: #fcf5ed;
 
 body {
-  font-family: sans-serif;
-  background-color: $primary-bg;
+  font-family: 'sailecmedium', sans-serif;
+  background-color: $primary-bg-dark;
   padding: 0;
   margin: 0;
+}
+
+// html {
+//   font-size: 10px;
+// }
+
+@font-face {
+  font-family: 'sailecbold';
+  src: url('../fonts/sailecbold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'sailecmedium';
+  src: url('../fonts/sailecmedium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'saileclight';
+  src: url('../fonts/saileclight.woff') format('woff');
 }
 
 *,
@@ -16,4 +42,21 @@ body {
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  font-size: 2.375rem;
+}
+
+h2 {
+  font-size: 1.75rem;
+  // font-size: 1.5rem;
+}
+
+h1,
+h2 {
+  display: inline;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
 }

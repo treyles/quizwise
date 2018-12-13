@@ -13,9 +13,23 @@ class Collection extends React.Component {
   render() {
     const { cards } = this.props;
     return (
-      <React.Fragment>
-        {cards.map(card => <CollectionCard key={card.id} data={card} />)}
-      </React.Fragment>
+      <div className="collection">
+        <header className="collection-header">
+          <h1>Quizwise</h1>
+          <div className="header-button-container">
+            <button className="session-button">START STUDY SESSION</button>
+            <button className="add-button">ADD FLASHCARD</button>
+          </div>
+        </header>
+        <div className="card-counter">{cards.length} FLASHCARDS</div>
+        <section className="collection-section">
+          <div className="card-container">
+            {cards.map((card, index) => (
+              <CollectionCard key={card.id} data={card} number={index} />
+            ))}
+          </div>
+        </section>
+      </div>
     );
   }
 }
