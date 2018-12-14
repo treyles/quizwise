@@ -1,12 +1,14 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import CollectionCard from './CollectionCard';
+import CardForm from './CardForm';
 
 import { fetchCards } from '../actions/';
 
 class Collection extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchCards();
   }
 
@@ -18,10 +20,12 @@ class Collection extends React.Component {
           <h1>Quizwise</h1>
           <div className="header-button-container">
             <button className="session-button">START STUDY SESSION</button>
-            <button className="add-button">ADD FLASHCARD</button>
+            <Link to="/form">
+              <button className="add-button">ADD FLASHCARD</button>
+            </Link>
           </div>
         </header>
-        <div className="card-counter">{cards.length} FLASHCARDS</div>
+        {/* <div className="card-counter">{cards.length} FLASHCARDS</div> */}
         <section className="collection-section">
           <div className="card-container">
             {cards.map((card, index) => (

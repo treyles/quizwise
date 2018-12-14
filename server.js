@@ -6,7 +6,8 @@ const routes = require('./routes');
 require('dotenv').config({ path: 'variables.env' });
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // serve static files
 // app.use(express.static('public'));

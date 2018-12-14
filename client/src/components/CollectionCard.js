@@ -19,7 +19,7 @@ class CollectionCard extends React.Component {
   // }
 
   // componentDidMount() {
-  //   console.log(this.props.number);
+  //   console.log(this.props.data);
   // }
 
   render() {
@@ -27,7 +27,10 @@ class CollectionCard extends React.Component {
     const { id } = this.props.data;
 
     return (
-      <div className="collection-card">
+      <div
+        className="collection-card"
+        onClick={() => console.log(data.id)}
+      >
         <span className="card-number">{number + 1}</span>
         <h2>{data.term}</h2>
         <button className="delete-button" onClick={() => deleteCard(id)}>

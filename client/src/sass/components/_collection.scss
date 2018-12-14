@@ -1,3 +1,9 @@
+// .collection {
+//   width: 100%;
+//   height: 100vh;
+//   background: $primary-bg-dark;
+// }
+
 .collection-header {
   z-index: 999;
   position: fixed;
@@ -5,9 +11,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 140px;
+  height: 120px;
   background: $primary-bg-dark;
-  padding: 0 3.313rem;
+  padding: 0 2.5rem;
 
   h1 {
     color: $text-light;
@@ -17,10 +23,9 @@
     display: inline-block;
 
     .session-button {
-      font-family: 'sailecbold', sans-serif;
       color: $text-light;
       border: 0;
-      width: 15rem;
+      // width: 15rem;
       height: 3.75rem;
       background: $start-button;
       margin-right: 1.375rem;
@@ -32,9 +37,8 @@
     }
 
     .add-button {
-      font-family: 'sailecbold', sans-serif;
       color: $text-light;
-      width: 12rem;
+      // width: 12rem;
       height: 3.75rem;
       background: transparent;
       border: 0.0938rem solid $text-light;
@@ -45,11 +49,12 @@
       }
     }
 
-    .session-button,
-    .add-button {
+    button {
+      font-family: 'sailecbold', sans-serif;
       font-size: 0.77rem;
       letter-spacing: 0.1rem;
       border-radius: 500px;
+      padding: 0 1.875rem;
       // padding: 1.4375rem 0;
       cursor: pointer;
       transition: 0.3s ease;
@@ -68,10 +73,10 @@
   font-family: 'saileclight', sans-serif;
   letter-spacing: 0.1113rem;
   color: $text-light;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   background: $primary-bg-dark;
   border-radius: 500px;
-  top: 110px;
+  top: 90px;
   left: 50%;
   transform: translateX(-50%);
   // box-shadow: 0 11px 49px 17px rgba(90, 99, 115, 0.75);
@@ -81,7 +86,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  padding-top: 220px;
+  padding-top: 210px;
 
   // background: red;
 
