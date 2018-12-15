@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Icon from '../utils/Icon';
 
@@ -10,7 +11,7 @@ class CollectionCard extends React.Component {
   constructor(props) {
     super(props);
 
-    // this.handleClick = this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   // handleClick() {
@@ -22,20 +23,35 @@ class CollectionCard extends React.Component {
   //   console.log(this.props.data);
   // }
 
+  handleClick(e) {
+    const { data, deleteCard, history } = this.props;
+    const target = e.target.classList;
+
+    if (target.contains('delete-button')) {
+      deleteCard(data.id);
+    } else {
+      history.push({
+        pathname: '/form',
+        state: { data }
+      });
+    }
+  }
+
   render() {
     const { data, deleteCard, number } = this.props;
     const { id } = this.props.data;
 
     return (
-      <div
-        className="collection-card"
-        onClick={() => console.log(data.id)}
-      >
-        <span className="card-number">{number + 1}</span>
-        <h2>{data.term}</h2>
-        <button className="delete-button" onClick={() => deleteCard(id)}>
-          <Icon icon="delete" />
-        </button>
+      <div onClick={this.handleClick}>
+        {/* <Link to={{ pathname: '/form', state: { data } }}> */}
+        <div className="collection-card">
+          <span className="card-number">{number + 1}</span>
+          <h2>{data.term}</h2>
+          <button className="delete-button">
+            <Icon icon="delete" />
+          </button>
+        </div>
+        {/* </Link> */}
       </div>
     );
   }
@@ -48,4 +64,6 @@ CollectionCard.propTypes = {
   }).isRequired
 };
 
-export default connect(null, { deleteCard })(CollectionCard);
+// export default connect(null, { deleteCard })(CollectionCard);
+
+export default withRouter(connect(null, { deleteCard })(CollectionCard));

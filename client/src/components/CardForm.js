@@ -18,11 +18,24 @@ class CardForm extends React.Component {
 
     this.handleTermChange = this.handleTermChange.bind(this);
     this.handleDefinitionInput = this.handleDefinitionInput.bind(this);
-    this.handlePost = this.handlePost.bind(this);
+    this.handleSaveClick = this.handleSaveClick.bind(this);
   }
 
   componentWillMount() {
     document.body.style.background = '#fff';
+  }
+
+  componentDidMount() {
+    const routerState = this.props.location.state;
+
+    // will update card if state is passed through router
+    if (routerState) {
+      const { term, definition } = routerState.data;
+      this.setState({ term, definition });
+
+      // manually set contenteditable div with definition
+      this.node.innerText = definition;
+    }
   }
 
   componentWillUnmount() {
@@ -41,16 +54,27 @@ class CardForm extends React.Component {
     });
   }
 
-  handlePost() {
+  handleSaveClick() {
     const { term, definition } = this.state;
+    const routerState = this.props.location.state;
 
-    axios
-      .post('/api/cards', { term, definition })
-      .then(res => {
-        console.log(res);
-        this.props.history.push('/');
-      })
-      .catch(err => console.error(err));
+    if (routerState) {
+      const { id } = routerState.data;
+
+      axios
+        .put(`/api/cards/${id}`, { term, definition })
+        .then(res => {
+          this.props.history.push('/');
+        })
+        .catch(err => console.error(err));
+    } else {
+      axios
+        .post('/api/cards', { term, definition })
+        .then(res => {
+          this.props.history.push('/');
+        })
+        .catch(err => console.error(err));
+    }
   }
 
   render() {
@@ -62,18 +86,20 @@ class CardForm extends React.Component {
               <Icon icon="arrow" />
             </button>
           </Link>
-          <button className="save-button" onClick={this.handlePost}>
+          <button className="save-button" onClick={this.handleSaveClick}>
             SAVE FLASHCARD
           </button>
         </header>
         <section className="form-section">
           <input
+            value={this.state.term}
             type="text"
             onChange={this.handleTermChange}
             placeholder="Type your term"
           />
           <div
-            contentEditable={true}
+            contentEditable
+            ref={node => (this.node = node)}
             placeholder="Type or paste your defintion here"
             onInput={this.handleDefinitionInput}
           />

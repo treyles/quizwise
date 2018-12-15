@@ -36,12 +36,15 @@
     position: absolute;
     top: 18px;
     right: 18px;
-    background: none;
     border: 0;
     padding: 0;
     transition: 0.2s ease;
     outline: none;
     cursor: pointer;
+
+    svg {
+      pointer-events: none;
+    }
 
     &:hover {
       transform: scale(1.1);
@@ -53,4 +56,8 @@
     // opacity: 0.6;
     transform: scale(1.015);
   }
+}
+
+a {
+  text-decoration: none;
 }
