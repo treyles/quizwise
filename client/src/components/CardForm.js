@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 // import { connect } from 'react-redux';
-import Icon from '../utils/Icon';
+// import Icon from '../utils/Icon';
 
 // import { deleteCard } from '../actions/';
 
@@ -28,7 +28,7 @@ class CardForm extends React.Component {
   componentDidMount() {
     const routerState = this.props.location.state;
 
-    // will update card if state is passed through router
+    // fills in text fields if state is passed through router
     if (routerState) {
       const { term, definition } = routerState.data;
       this.setState({ term, definition });
@@ -83,7 +83,7 @@ class CardForm extends React.Component {
         <header className="form-header">
           <Link to="/">
             <button className="back-button">
-              <Icon icon="arrow" />
+              {/* <Icon icon="arrow" /> */}button
             </button>
           </Link>
           <button className="save-button" onClick={this.handleSaveClick}>

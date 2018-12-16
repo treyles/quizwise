@@ -41,12 +41,19 @@ class CollectionCard extends React.Component {
     const { data, deleteCard, number } = this.props;
     const { id } = this.props.data;
 
+    console.log(data);
+
     return (
       <div onClick={this.handleClick}>
         {/* <Link to={{ pathname: '/form', state: { data } }}> */}
         <div className="collection-card">
-          <span className="card-number">{number + 1}</span>
-          <h2>{data.term}</h2>
+          <div className="card-count">{number + 1}</div>
+          <div className="card-term">
+            <h3>{data.term}</h3>
+          </div>
+          <div className="card-description">
+            <h4>{data.definition}</h4>
+          </div>
           <button className="delete-button">
             <Icon icon="delete" />
           </button>

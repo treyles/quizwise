@@ -1,60 +1,76 @@
 .collection-card {
   display: flex;
   position: relative;
-  justify-content: center;
   align-items: center;
+  // flex-wrap: wrap;
   width: 100%;
-  min-height: 7.5rem;
+  min-height: 60px;
+  // height: 200px;
   text-align: center;
   margin-bottom: 1.3125rem;
-  // background: $text-light;
+  padding: 40px 0;
   background: #fff;
-  // border-radius: 0 0 0.375rem 0.375rem;
-  border-radius: 0.375rem;
+  border-radius: 0.25rem;
   border-top: 6px solid #8d9ab2;
-  padding: 2.1875rem 6.8rem;
   cursor: pointer;
   transition: 0.3s ease;
 
-  .card-number {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    // top: 2.1875rem;
-    left: 2.1875rem;
-    font-size: 2.5rem;
-    // font-size: 2rem;
-    font-family: 'sailecmedium', sans-serif;
+  .card-count,
+  .card-term,
+  .card-description {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-count {
+    flex-shrink: 0;
+    min-height: inherit;
+    width: 5.375rem;
+    font-size: 2rem;
     color: #cfd2d5;
   }
 
-  h2 {
+  .card-term {
+    flex-shrink: 0;
+    min-height: inherit;
+    width: 16.25rem;
+    padding: 0 2.375rem 0 0.625rem;
     color: $primary-bg-dark;
   }
 
-  .delete-button {
-    position: absolute;
-    top: 18px;
-    right: 18px;
-    border: 0;
-    padding: 0;
-    transition: 0.2s ease;
-    outline: none;
-    cursor: pointer;
-
-    svg {
-      pointer-events: none;
-    }
-
-    &:hover {
-      transform: scale(1.1);
-      transform-origin: center;
-    }
+  .card-description {
+    color: #7f8b9b;
+    justify-content: flex-start;
+    padding: 0 4.625rem 0 2.375rem;
+    text-align: left;
+    min-height: inherit;
+    width: 100%;
+    border-left: 1px solid #dedede;
   }
 
   &:hover {
-    // opacity: 0.6;
     transform: scale(1.015);
+  }
+}
+
+.delete-button {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  border: 0;
+  padding: 0;
+  transition: 0.2s ease;
+  outline: none;
+  cursor: pointer;
+
+  svg {
+    pointer-events: none;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+    transform-origin: center;
   }
 }
 

@@ -20,7 +20,7 @@
   padding: 0 2.5rem;
 
   button {
-    font-family: 'sailecbold', sans-serif;
+    font-family: 'apercubold', sans-serif;
     border: 0;
     letter-spacing: 0.1rem;
     font-size: 0.77rem;
@@ -62,7 +62,7 @@
     width: 100%;
     border: 0;
     background: transparent;
-    font-family: 'sailecbold', sans-serif;
+    font-family: 'apercubold', sans-serif;
     font-size: 2.5rem;
     outline: none;
     color: #5e6773;
@@ -87,7 +87,7 @@
   [contenteditable='true']:empty:before {
     content: attr(placeholder);
     display: block; /* For Firefox */
-    font-family: 'saileclight', sans-serif;
+    font-family: 'aperculight', sans-serif;
     color: #8f9fb2;
   }
 
@@ -101,6 +101,5 @@
     margin: 1.1em 0 5em 0;
     line-height: 2.2rem;
     word-spacing: 0.15rem;
-    // font-family: 'saileclight', sans-serif;
   }
 }

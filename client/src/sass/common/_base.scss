@@ -3,12 +3,13 @@ $primary-bg-dark: #5a6373;
 $primary-bg-darkL: #626c7d;
 
 $start-button: #72b4a6;
+$dark-button: #4c5565;
 
 // text colors
-$text-light: #fcf5ed;
+// $text-light: #fcf5ed;
 
 body {
-  font-family: 'sailecmedium', sans-serif;
+  font-family: 'apercumedium', sans-serif;
   background-color: $primary-bg-dark;
   padding: 0;
   margin: 0;
@@ -19,18 +20,18 @@ body {
 // }
 
 @font-face {
-  font-family: 'sailecbold';
-  src: url('../fonts/sailecbold.woff') format('woff');
+  font-family: 'apercubold';
+  src: url('../fonts/apercubold.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'sailecmedium';
-  src: url('../fonts/sailecmedium.woff') format('woff');
+  font-family: 'apercumedium';
+  src: url('../fonts/apercumedium.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'saileclight';
-  src: url('../fonts/saileclight.woff') format('woff');
+  font-family: 'aperculight';
+  src: url('../fonts/aperculight.woff') format('woff');
 }
 
 *,
@@ -50,11 +51,29 @@ h1 {
 
 h2 {
   font-size: 1.75rem;
-  // font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.1875rem;
+  letter-spacing: 0.0775rem;
+  line-height: 1.75rem;
+}
+
+// 14
+h4 {
+  font-size: 0.875rem;
+  letter-spacing: 0.0581rem;
+  line-height: 1.25rem;
+}
+
+h5 {
+  font-size: 0.75rem;
 }
 
 h1,
-h2 {
+h2,
+h3,
+h4 {
   display: inline;
   font-weight: normal;
   margin: 0;

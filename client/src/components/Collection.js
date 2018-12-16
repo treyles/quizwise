@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CollectionCard from './CollectionCard';
 import CardForm from './CardForm';
+import Icon from '../utils/Icon';
 
 import { fetchCards } from '../actions/';
 
@@ -17,15 +18,24 @@ class Collection extends React.Component {
     return (
       <div className="collection">
         <header className="collection-header">
-          <h1>Quizwise</h1>
+          <div className="collection-back">
+            <Icon icon="backButton" />
+            <span>
+              <h5>BACK TO SETS</h5>
+            </span>
+          </div>
           <div className="header-button-container">
-            <button className="session-button">START STUDY SESSION</button>
+            <div className="term-count">
+              <h5>12 TERMS</h5>
+            </div>
+            <button className="session-button">STUDY SESSION</button>
             <Link to="/form">
-              <button className="add-button">ADD FLASHCARD</button>
+              <button className="add-button">
+                <Icon icon="addTerm" />
+              </button>
             </Link>
           </div>
         </header>
-        {/* <div className="card-counter">{cards.length} FLASHCARDS</div> */}
         <section className="collection-section">
           <div className="card-container">
             {cards.map((card, index) => (
