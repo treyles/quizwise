@@ -13,40 +13,45 @@
   top: 0;
   left: 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   width: 100vw;
-  height: 120px;
-  padding: 0 2.5rem;
+  height: 8.375rem;
+  background: #fff;
+  padding: 0 2.1875rem 0 3.375rem;
+  box-shadow: 0px 5px 50px 0px rgba(255, 255, 255, 0.7);
 
   button {
     font-family: 'apercubold', sans-serif;
     border: 0;
     letter-spacing: 0.1rem;
-    font-size: 0.77rem;
     outline: none;
     cursor: pointer;
     transition: 0.3s ease;
   }
 
-  .back-button {
+  .cancel-button {
     background: transparent;
+    color: $placeholder-text;
+    margin-right: 2.2rem;
 
     &:hover {
-      transform: translateX(-4px);
+      // color: darken($placeholder-text, 10%);
+      color: lighten($primary-bg-dark, 10%);
     }
   }
 
   .save-button {
+    font-size: 0.8125rem;
     color: #fff;
-    height: 3.75rem;
+    width: 13.5625rem;
+    height: 4.3125rem;
     background: $start-button;
     border-radius: 500px;
-    padding: 0 2rem;
+    // padding: 26.5px 0;
 
     &:hover {
       background: darken($start-button, 10%);
-      transform: scale(1.02);
     }
   }
 }
@@ -65,14 +70,15 @@
     font-family: 'apercubold', sans-serif;
     font-size: 2.5rem;
     outline: none;
-    color: #5e6773;
+    // color: #5e6773;
+    color: $primary-bg-dark;
   }
 
   ::-webkit-input-placeholder {
-    color: #8f9fb2;
+    color: $placeholder-text;
   }
   ::-moz-placeholder {
-    color: #8f9fb2;
+    color: $placeholder-text;
     opacity: 1;
   }
   // :-ms-input-placeholder {
@@ -87,7 +93,6 @@
   [contenteditable='true']:empty:before {
     content: attr(placeholder);
     display: block; /* For Firefox */
-    font-family: 'aperculight', sans-serif;
     color: #8f9fb2;
   }
 
@@ -96,10 +101,11 @@
   }
 
   div[contenteditable] {
-    color: #5e6773;
-    font-size: 1.4rem;
-    margin: 1.1em 0 5em 0;
+    font-family: 'apercuregular', sans-serif;
+    color: $primary-bg-dark;
+    font-size: 1.1875rem;
+    margin: 1.5em 0 5em 0;
     line-height: 2.2rem;
-    word-spacing: 0.15rem;
+    word-spacing: 0.06rem;
   }
 }

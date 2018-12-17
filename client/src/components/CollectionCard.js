@@ -41,8 +41,6 @@ class CollectionCard extends React.Component {
     const { data, deleteCard, number } = this.props;
     const { id } = this.props.data;
 
-    console.log(data);
-
     return (
       <div onClick={this.handleClick}>
         {/* <Link to={{ pathname: '/form', state: { data } }}> */}

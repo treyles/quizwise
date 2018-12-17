@@ -26,7 +26,7 @@ class Collection extends React.Component {
           </div>
           <div className="header-button-container">
             <div className="term-count">
-              <h5>12 TERMS</h5>
+              <h5>{cards.length} TERMS</h5>
             </div>
             <button className="session-button">STUDY SESSION</button>
             <Link to="/form">

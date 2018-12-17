@@ -19,10 +19,12 @@ class CardForm extends React.Component {
     this.handleTermChange = this.handleTermChange.bind(this);
     this.handleDefinitionInput = this.handleDefinitionInput.bind(this);
     this.handleSaveClick = this.handleSaveClick.bind(this);
+    this.handleEscape = this.handleEscape.bind(this);
   }
 
   componentWillMount() {
     document.body.style.background = '#fff';
+    document.addEventListener('keydown', this.handleEscape);
   }
 
   componentDidMount() {
@@ -40,6 +42,13 @@ class CardForm extends React.Component {
 
   componentWillUnmount() {
     document.body.style.background = '#5a6373';
+    document.removeEventListener('keydown', this.handleEscape);
+  }
+
+  handleEscape(e) {
+    if (e.key === 'Escape') {
+      this.props.history.push('/');
+    }
   }
 
   handleTermChange(e) {
@@ -82,12 +91,12 @@ class CardForm extends React.Component {
       <div className="card-form">
         <header className="form-header">
           <Link to="/">
-            <button className="back-button">
-              {/* <Icon icon="arrow" /> */}button
+            <button className="cancel-button">
+              <h5>CANCEL (PRESS ESC)</h5>
             </button>
           </Link>
           <button className="save-button" onClick={this.handleSaveClick}>
-            SAVE FLASHCARD
+            SAVE TERM
           </button>
         </header>
         <section className="form-section">

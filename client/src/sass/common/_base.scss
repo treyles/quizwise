@@ -1,6 +1,7 @@
 $primary-bg: dodgerBlue;
 $primary-bg-dark: #5a6373;
 $primary-bg-darkL: #626c7d;
+$placeholder-text: #8f9fb2;
 
 $start-button: #72b4a6;
 $dark-button: #4c5565;
@@ -22,6 +23,11 @@ body {
 @font-face {
   font-family: 'apercubold';
   src: url('../fonts/apercubold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'apercuregular';
+  src: url('../fonts/apercuregular.woff') format('woff');
 }
 
 @font-face {
@@ -62,7 +68,8 @@ h3 {
 // 14
 h4 {
   font-size: 0.875rem;
-  letter-spacing: 0.0581rem;
+  // letter-spacing: 0.0581rem;
+  word-spacing: 0.06rem;
   line-height: 1.25rem;
 }
 
