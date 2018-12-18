@@ -1,6 +1,7 @@
 const router = require('express').Router();
 var path = require('path');
 const { Pool } = require('pg');
+// const uuidv1 = require('uuid/v1');
 const c = require('./variables');
 
 const pool = new Pool({
@@ -19,11 +20,18 @@ const pool = new Pool({
 //     .catch(() => res.sendStatus(500));
 // });
 
+router.get('/sets', (req, res) => {
+  pool
+    .query('SELECT * FROM sets ORDER BY id DESC')
+    .then(result => res.json(result.rows))
+    .catch(e => console.error(e));
+});
+
 router.get('/cards', (req, res) => {
   // const testPath = path.join(__dirname + '/../client/dist/index.html');
 
   pool
-    .query('SELECT * FROM cards ORDER BY id ASC')
+    .query('SELECT * FROM cards ORDER BY id DESC')
     .then(result => res.json(result.rows))
     .catch(e => console.error(e));
 });
@@ -35,6 +43,14 @@ router.get('/cards/:id', (req, res) => {
   pool
     .query('SELECT * FROM cards WHERE id = $1', [id])
     .then(result => res.json(result.rows))
+    .catch(e => console.error(e));
+});
+
+router.post('/sets', (req, res) => {
+  const { name } = req.body;
+  pool
+    .query('INSERT INTO sets (name) VALUES ($1)', [name])
+    .then(() => res.sendStatus(200))
     .catch(e => console.error(e));
 });
 
@@ -57,6 +73,15 @@ router.delete('/cards/:id', (req, res) => {
 
   pool
     .query('DELETE FROM cards WHERE id = $1', [id])
+    .then(() => res.sendStatus(200))
+    .catch(err => console.error(err));
+});
+
+router.delete('/sets/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+
+  pool
+    .query('DELETE FROM sets WHERE id = $1', [id])
     .then(() => res.sendStatus(200))
     .catch(err => console.error(err));
 });

@@ -1,1 +1,6 @@
-export { fetchCards, deleteCard } from './dataActions';
+export {
+  fetchSets,
+  fetchCards,
+  deleteCard,
+  deleteSet
+} from './dataActions';

@@ -1,0 +1,91 @@
+.set-modal-container {
+  z-index: 99999;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+
+  .modal {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 60%;
+    max-width: 930px;
+    height: 253px;
+    background: #fff;
+    padding: 40px;
+    padding-bottom: 80px;
+    border-radius: 4px;
+
+    .delete-button {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      border: 0;
+      padding: 0;
+      transition: 0.2s ease;
+      outline: none;
+      cursor: pointer;
+
+      svg {
+        pointer-events: none;
+      }
+
+      &:hover {
+        transform: scale(1.1);
+        transform-origin: center;
+      }
+    }
+
+    input {
+      width: 100%;
+      padding: 17px 0;
+      font-family: inherit;
+      font-size: 1.75rem;
+      color: $primary-bg-dark;
+      border: 0;
+      outline: none;
+      border-bottom: 1px solid #e9edf1;
+    }
+
+    ::-webkit-input-placeholder {
+      color: $placeholder-text;
+    }
+    ::-moz-placeholder {
+      color: $placeholder-text;
+      opacity: 1;
+    }
+
+    .save-set-button {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .save-set-button {
+      // padding: 27px 0;
+      background: $primary-bg-dark;
+      width: 100%;
+      height: 69px;
+      border-radius: 0 0 4px 4px;
+      border: 0;
+      outline: none;
+      cursor: pointer;
+      font-family: 'apercubold', sans-serif;
+      font-size: 0.8125rem;
+      color: #fff;
+      letter-spacing: 0.1rem;
+      transition: 0.3s ease;
+
+      &:hover {
+        background: darken($start-button, 10%);
+      }
+    }
+  }
+}
