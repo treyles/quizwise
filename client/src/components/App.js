@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Home from './Home';
 import Collection from './Collection';
 import Study from './Study';
 import CardForm from './CardForm';
@@ -15,6 +16,7 @@ class App extends React.Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Collection} />
+          <Route path="/home" component={Home} />
           <Route path="/study" component={Study} />
           <Route path="/form" component={CardForm} />
         </Switch>

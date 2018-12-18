@@ -25,9 +25,9 @@ class Collection extends React.Component {
             </span>
           </div>
           <div className="header-button-container">
-            <div className="term-count">
+            <span className="term-count">
               <h5>{cards.length} TERMS</h5>
-            </div>
+            </span>
             <button className="session-button">STUDY SESSION</button>
             <Link to="/form">
               <button className="add-button">

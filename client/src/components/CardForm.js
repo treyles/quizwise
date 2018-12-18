@@ -92,7 +92,7 @@ class CardForm extends React.Component {
         <header className="form-header">
           <Link to="/">
             <button className="cancel-button">
-              <h5>CANCEL (PRESS ESC)</h5>
+              <h5>CANCEL</h5>
             </button>
           </Link>
           <button className="save-button" onClick={this.handleSaveClick}>

@@ -51,31 +51,31 @@
     border-left: 1px solid #dedede;
   }
 
+  .delete-button {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    border: 0;
+    padding: 0;
+    transition: 0.2s ease;
+    outline: none;
+    cursor: pointer;
+
+    svg {
+      pointer-events: none;
+    }
+
+    &:hover {
+      transform: scale(1.1);
+      transform-origin: center;
+    }
+  }
+
+  a {
+    text-decoration: none;
+  }
+
   &:hover {
     transform: scale(1.015);
   }
-}
-
-.delete-button {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  border: 0;
-  padding: 0;
-  transition: 0.2s ease;
-  outline: none;
-  cursor: pointer;
-
-  svg {
-    pointer-events: none;
-  }
-
-  &:hover {
-    transform: scale(1.1);
-    transform-origin: center;
-  }
-}
-
-a {
-  text-decoration: none;
 }

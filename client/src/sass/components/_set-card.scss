@@ -1,0 +1,109 @@
+.set-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 275px;
+  height: 304px;
+  background: #fff;
+  border-radius: 0 0 0.25rem 0.25rem;
+  border-top: 6px solid #8d9ab2;
+  border-bottom: 1px solid #bdc0c7;
+  padding: 34px;
+  margin: 24px;
+  margin-bottom: 80px;
+  cursor: pointer;
+  transition: 0.3s ease;
+
+  .name-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    h3 {
+      text-align: center;
+      color: $primary-bg-dark;
+    }
+
+    .set-count {
+      position: absolute;
+      top: -43px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: $placeholder-text;
+    }
+  }
+
+  .delete-button {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    border: 0;
+    padding: 0;
+    transition: 0.2s ease;
+    outline: none;
+    cursor: pointer;
+
+    svg {
+      pointer-events: none;
+    }
+
+    &:hover {
+      transform: scale(1.1);
+      transform-origin: center;
+    }
+  }
+
+  .decoration {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    bottom: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    div {
+      box-sizing: border-box;
+      width: 266px;
+      height: 6px;
+      background: #fff;
+      border-radius: 0 0 4px 4px;
+      border: 1px solid #bdc0c7;
+      border-top: 0;
+
+      &:nth-child(2) {
+        width: 254px;
+        border: 0;
+      }
+    }
+  }
+
+  .session-button {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -34px;
+    font-family: 'apercubold', sans-serif;
+    font-size: 11px;
+    background: $start-button;
+    color: #fff;
+    letter-spacing: 0.1rem;
+    width: 166px;
+    height: 53px;
+    border-radius: 500px;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+
+    &:hover {
+      background: darken($start-button, 10%);
+    }
+  }
+
+  &:hover {
+    transform: scale(1.015);
+  }
+}
