@@ -32,7 +32,6 @@ class CreateSetModal extends Component {
   }
 
   handleClickOutside(e) {
-    console.log(e);
     if (e.target.className === 'set-modal-container') {
       this.props.closeModal();
     }
@@ -49,7 +48,6 @@ class CreateSetModal extends Component {
   }
 
   handleChange(e) {
-    console.log('handleChange fired');
     this.setState({
       name: e.target.value
     });

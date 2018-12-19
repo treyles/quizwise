@@ -7,31 +7,7 @@ import SetCard from './SetCard';
 import CreateSetModal from './CreateSetModal';
 import Icon from '../utils/Icon';
 
-import { fetchSets } from '../actions/';
-
-// const bsData = [
-//   {
-//     id: 1,
-//     terms: 12,
-//     name: 'Technical Interview'
-//   },
-//   {
-//     id: 2,
-//     terms: 34,
-//     name: 'Soft Skill Questions'
-//   },
-//   {
-//     id: 3,
-//     terms: 23,
-//     name: 'The Assassination of Jesse James by the Coward Robert Ford'
-//   },
-//   {
-//     id: 4,
-//     terms: 32,
-//     name:
-//       'The Assassination of Jesse James by the Coward Robert Ford and the Eternal Sunshine of the Spotless Mind'
-//   }
-// ];
+import { fetchSets, clearCollection } from '../actions/';
 
 class Home extends React.Component {
   constructor(props) {
@@ -45,6 +21,7 @@ class Home extends React.Component {
 
   componentDidMount() {
     this.props.fetchSets();
+    this.props.clearCollection();
   }
 
   renderCreateSetModal() {
@@ -54,7 +31,6 @@ class Home extends React.Component {
   }
 
   render() {
-    // console.log(this.props.sets);
     const { isModalOpen } = this.state;
     const { sets } = this.props;
 
@@ -64,7 +40,7 @@ class Home extends React.Component {
           <h1>Quizwise</h1>
           <div className="header-button-container">
             <span className="term-count">
-              <h5>12 SETS</h5>
+              <h5>{sets.length} SETS</h5>
             </span>
             <button
               className="add-button"
@@ -91,4 +67,6 @@ const mapStateToProps = state => ({
   sets: state.data.sets
 });
 
-export default connect(mapStateToProps, { fetchSets })(Home);
+export default connect(mapStateToProps, { fetchSets, clearCollection })(
+  Home
+);

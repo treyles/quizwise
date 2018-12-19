@@ -1,9 +1,10 @@
 /* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 // import Icon from '../utils/Icon';
 
 // import { deleteCard } from '../actions/';
@@ -20,6 +21,7 @@ class CardForm extends React.Component {
     this.handleDefinitionInput = this.handleDefinitionInput.bind(this);
     this.handleSaveClick = this.handleSaveClick.bind(this);
     this.handleEscape = this.handleEscape.bind(this);
+    this.handleCancelClick = this.handleCancelClick.bind(this);
   }
 
   componentWillMount() {
@@ -45,9 +47,14 @@ class CardForm extends React.Component {
     document.removeEventListener('keydown', this.handleEscape);
   }
 
+  // TODO: rename to goBack? — save uses this function, not just cancel
+  handleCancelClick() {
+    this.props.history.goBack();
+  }
+
   handleEscape(e) {
     if (e.key === 'Escape') {
-      this.props.history.push('/');
+      this.handleCancelClick();
     }
   }
 
@@ -64,6 +71,7 @@ class CardForm extends React.Component {
   }
 
   handleSaveClick() {
+    const { currentSet } = this.props;
     const { term, definition } = this.state;
     const routerState = this.props.location.state;
 
@@ -73,15 +81,16 @@ class CardForm extends React.Component {
       axios
         .put(`/api/cards/${id}`, { term, definition })
         .then(res => {
-          this.props.history.push('/');
+          this.handleCancelClick();
         })
         .catch(err => console.error(err));
     } else {
       axios
-        .post('/api/cards', { term, definition })
+        .post('/api/cards', { term, definition, currentSet })
         .then(res => {
-          this.props.history.push('/');
+          return axios.put(`/api/sets/${currentSet}`);
         })
+        .then(() => this.handleCancelClick())
         .catch(err => console.error(err));
     }
   }
@@ -90,11 +99,14 @@ class CardForm extends React.Component {
     return (
       <div className="card-form">
         <header className="form-header">
-          <Link to="/">
-            <button className="cancel-button">
-              <h5>CANCEL</h5>
-            </button>
-          </Link>
+          {/* <Link to="/collection"> */}
+          <button
+            className="cancel-button"
+            onClick={this.handleCancelClick}
+          >
+            CANCEL
+          </button>
+          {/* </Link> */}
           <button className="save-button" onClick={this.handleSaveClick}>
             SAVE TERM
           </button>
@@ -122,4 +134,8 @@ class CardForm extends React.Component {
 //   // PropTypes
 // };
 
-export default CardForm;
+const mapStateToProps = state => ({
+  currentSet: state.data.currentSet
+});
+
+export default withRouter(connect(mapStateToProps, null)(CardForm));

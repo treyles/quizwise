@@ -6,29 +6,48 @@ import CollectionCard from './CollectionCard';
 import CardForm from './CardForm';
 import Icon from '../utils/Icon';
 
-import { fetchCards } from '../actions/';
+import { fetchCollection } from '../actions/';
 
 class Collection extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  // }
+
   componentDidMount() {
-    this.props.fetchCards();
+    const routerState = this.props.location.state;
+    this.props.fetchCollection(routerState.id);
   }
 
   render() {
     const { cards } = this.props;
+
     return (
       <div className="collection">
         <header className="collection-header">
-          <div className="collection-back">
-            <Icon icon="backButton" />
-            <span>
-              <h5>BACK TO SETS</h5>
-            </span>
-          </div>
+          <Link to="/">
+            <div className="collection-back">
+              <Icon icon="backButton" />
+              <span>
+                <h5>BACK TO SETS</h5>
+              </span>
+            </div>
+          </Link>
           <div className="header-button-container">
             <span className="term-count">
               <h5>{cards.length} TERMS</h5>
             </span>
-            <button className="session-button">STUDY SESSION</button>
+            {/* {cards.length > 1 && (
+              <button className="session-button">STUDY SESSION</button>
+            )} */}
+            <button
+              className={
+                cards.length > 1
+                  ? 'session-button'
+                  : 'session-button disable'
+              }
+            >
+              STUDY SESSION
+            </button>
             <Link to="/form">
               <button className="add-button">
                 <Icon icon="addTerm" />
@@ -52,4 +71,4 @@ const mapStateToProps = state => ({
   cards: state.data.cards
 });
 
-export default connect(mapStateToProps, { fetchCards })(Collection);
+export default connect(mapStateToProps, { fetchCollection })(Collection);

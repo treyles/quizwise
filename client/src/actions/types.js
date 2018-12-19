@@ -1,4 +1,5 @@
 export const FETCH_SETS = 'FETCH_SETS';
-export const FETCH_CARDS = 'FETCH_CARDS';
+export const FETCH_COLLECTION = 'FETCH_COLLECTION';
+export const CLEAR_COLLECTION = 'CLEAR_COLLECTION';
 export const DELETE_CARD = 'DELETE_CARD';
 export const DELETE_SET = 'DELETE_SET';

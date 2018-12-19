@@ -20,6 +20,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
+    pointer-events: none;
 
     h3 {
       text-align: center;
@@ -31,6 +32,7 @@
       top: -43px;
       left: 50%;
       transform: translateX(-50%);
+      letter-spacing: 0.05rem;
       white-space: nowrap;
       color: $placeholder-text;
     }
@@ -56,6 +58,17 @@
     }
   }
 
+  .hint {
+    position: absolute;
+    bottom: 30px;
+    // width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    letter-spacing: 0.05rem;
+    white-space: nowrap;
+    color: $placeholder-text;
+  }
+
   .decoration {
     position: absolute;
     display: flex;
@@ -64,6 +77,7 @@
     bottom: -13px;
     left: 50%;
     transform: translateX(-50%);
+    pointer-events: none;
 
     div {
       box-sizing: border-box;

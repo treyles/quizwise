@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { FETCH_SETS, FETCH_CARDS, DELETE_CARD, DELETE_SET } from './types';
+import {
+  FETCH_SETS,
+  FETCH_COLLECTION,
+  CLEAR_COLLECTION,
+  DELETE_CARD,
+  DELETE_SET
+} from './types';
 
 export const fetchSets = () => dispatch => {
   axios
@@ -13,23 +19,32 @@ export const fetchSets = () => dispatch => {
     .catch(err => console.error(err));
 };
 
-export const fetchCards = () => dispatch => {
+export const fetchCollection = id => dispatch => {
   axios
-    .get('/api/cards')
+    .get(`/api/collection/${id}`)
     .then(res => {
       dispatch({
-        type: FETCH_CARDS,
-        cards: res.data
+        type: FETCH_COLLECTION,
+        cards: res.data,
+        currentSet: id
       });
     })
     .catch(err => console.error(err));
 };
 
+export const clearCollection = () => dispatch => {
+  dispatch({
+    type: CLEAR_COLLECTION
+  });
+};
+
 export const deleteCard = id => (dispatch, getState) => {
-  const { cards } = getState().data;
+  const { cards, currentSet } = getState().data;
 
   axios
     .delete(`/api/cards/${id}`)
+    // update number of terms for set cards
+    .then(() => axios.put(`/api/sets/${currentSet}`))
     .then(() => {
       dispatch({
         type: DELETE_CARD,

@@ -1,6 +1,7 @@
 export {
   fetchSets,
-  fetchCards,
+  fetchCollection,
+  clearCollection,
   deleteCard,
   deleteSet
 } from './dataActions';

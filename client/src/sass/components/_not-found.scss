@@ -1,0 +1,57 @@
+.not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  color: #fff;
+
+  .text,
+  .error,
+  button {
+    margin-bottom: 20px;
+  }
+
+  .text {
+    color: #929bac;
+  }
+
+  .error {
+    font-size: 75px;
+  }
+
+  button {
+    font-family: 'apercubold', sans-serif;
+    color: inherit;
+    font-size: 0.8125rem;
+    padding: 27px 0;
+    letter-spacing: 0.1rem;
+    width: 13.5625rem;
+    height: 4.3125rem;
+    border-radius: 500px;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+    background: $dark-button;
+    transition: 0.3s ease;
+    margin-top: 20px;
+
+    &:hover {
+      background: darken($dark-button, 10%);
+    }
+  }
+}
+
+.add-button {
+  padding: 27px 0;
+  background: $dark-button;
+
+  svg {
+    margin-right: 6px;
+  }
+
+  &:hover {
+    background: darken($dark-button, 10%);
+  }
+}

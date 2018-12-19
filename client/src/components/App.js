@@ -6,6 +6,7 @@ import Home from './Home';
 import Collection from './Collection';
 import Study from './Study';
 import CardForm from './CardForm';
+import NotFound from './NotFound';
 // import { connect } from 'react-redux';
 
 // import { fetchCards } from '../actions/';
@@ -15,10 +16,11 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={Collection} />
-          <Route path="/home" component={Home} />
+          <Route exact path="/" component={Home} />
+          <Route path="/collection/:id" component={Collection} />
           <Route path="/study" component={Study} />
           <Route path="/form" component={CardForm} />
+          <Route component={NotFound} />
         </Switch>
       </BrowserRouter>
     );

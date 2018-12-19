@@ -1,6 +1,7 @@
 import {
   FETCH_SETS,
-  FETCH_CARDS,
+  FETCH_COLLECTION,
+  CLEAR_COLLECTION,
   DELETE_CARD,
   DELETE_SET
 } from '../actions/types';
@@ -17,10 +18,17 @@ export default function data(state = initialState, action) {
         ...state,
         sets: action.sets
       };
-    case FETCH_CARDS:
+    case FETCH_COLLECTION:
       return {
         ...state,
-        cards: action.cards
+        cards: action.cards,
+        currentSet: action.currentSet
+      };
+    case CLEAR_COLLECTION:
+      return {
+        ...state,
+        cards: [],
+        currentSet: null
       };
     case DELETE_CARD:
       return {

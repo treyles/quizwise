@@ -17,6 +17,10 @@
   padding: 0 2.1875rem 0 3.375rem;
   box-shadow: 0px 5px 50px 0px rgba(90, 99, 115, 0.5);
 
+  a {
+    text-decoration: none;
+  }
+
   .collection-back {
     display: flex;
     align-items: center;
@@ -28,6 +32,14 @@
 
     svg {
       margin-right: 0.8125rem;
+      transition: 0.3s ease;
+    }
+
+    &:hover {
+      svg {
+        transform: translateX(-3px);
+        // opacity: 0.5;
+      }
     }
   }
 
@@ -48,6 +60,11 @@
 
       &:hover {
         background: darken($start-button, 10%);
+      }
+
+      &.disable {
+        opacity: 0.5;
+        pointer-events: none;
       }
     }
 

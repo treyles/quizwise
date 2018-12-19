@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Icon from '../utils/Icon';
@@ -17,10 +18,6 @@ class CollectionCard extends React.Component {
   // handleClick() {
   //   const { id } = this.props.data;
   //   this.props.deleteCard(id);
-  // }
-
-  // componentDidMount() {
-  //   console.log(this.props.data);
   // }
 
   handleClick(e) {
