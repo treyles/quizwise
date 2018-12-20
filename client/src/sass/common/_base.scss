@@ -92,3 +92,36 @@ h5 {
   margin: 0;
   padding: 0;
 }
+
+// placeholder animations
+@keyframes pulse {
+  from {
+    background: #606977;
+  }
+  to {
+    background: #626b79;
+  }
+}
+
+.empty-message {
+  z-index: 9999;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translateX(-50%) translateY(-40%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  h2 {
+    color: #fff;
+    font-size: 1.5625rem;
+    margin-bottom: 1.1rem;
+  }
+
+  h4 {
+    color: #929bac;
+    font-size: 0.8125rem;
+  }
+}

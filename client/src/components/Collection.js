@@ -19,7 +19,18 @@ class Collection extends React.Component {
   }
 
   render() {
-    const { cards } = this.props;
+    const { cards, cardsLoading } = this.props;
+
+    const placeholder = [...Array(3)].map((_, index) => (
+      <div key={index} className="placeholder" />
+    ));
+
+    const emptyMessage = (
+      <div className="empty-message">
+        <h2>{"You don't have any cards yet"}</h2>
+        <h4>2 TERMS UNLOCKS STUDY SESSION</h4>
+      </div>
+    );
 
     return (
       <div className="collection">
@@ -57,6 +68,8 @@ class Collection extends React.Component {
         </header>
         <section className="collection-section">
           <div className="card-container">
+            {cardsLoading && placeholder}
+            {!cardsLoading && !cards.length && emptyMessage}
             {cards.map((card, index) => (
               <CollectionCard key={card.id} data={card} number={index} />
             ))}
@@ -68,7 +81,8 @@ class Collection extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  cards: state.data.cards
+  cards: state.data.cards,
+  cardsLoading: state.data.cardsLoading
 });
 
 export default connect(mapStateToProps, { fetchCollection })(Collection);

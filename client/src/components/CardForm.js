@@ -88,6 +88,7 @@ class CardForm extends React.Component {
       axios
         .post('/api/cards', { term, definition, currentSet })
         .then(res => {
+          // update number of terms for set card ui
           return axios.put(`/api/sets/${currentSet}`);
         })
         .then(() => this.handleCancelClick())

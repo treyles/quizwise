@@ -8,7 +8,9 @@ import {
 
 const initialState = {
   sets: [],
-  cards: []
+  cards: [],
+  setsLoading: true,
+  cardsLoading: true
 };
 
 export default function data(state = initialState, action) {
@@ -16,19 +18,22 @@ export default function data(state = initialState, action) {
     case FETCH_SETS:
       return {
         ...state,
-        sets: action.sets
+        sets: action.sets,
+        setsLoading: false
       };
     case FETCH_COLLECTION:
       return {
         ...state,
         cards: action.cards,
-        currentSet: action.currentSet
+        currentSet: action.currentSet,
+        cardsLoading: false
       };
     case CLEAR_COLLECTION:
       return {
         ...state,
         cards: [],
-        currentSet: null
+        currentSet: null,
+        cardsLoading: true
       };
     case DELETE_CARD:
       return {

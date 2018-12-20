@@ -62,8 +62,12 @@ class SetCard extends Component {
           </span>
           {data.terms > 1 ? (
             <button className="session-button">STUDY SESSION</button>
-          ) : null // <h5 className="hint">Add 2 terms to unlock study session</h5>
-          }
+          ) : (
+            <h5 className="hint">
+              Add {data.terms < 1 ? '2 terms' : '1 term'} to unlock study
+              session
+            </h5>
+          )}
         </div>
       </React.Fragment>
     );

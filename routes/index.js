@@ -85,6 +85,15 @@ router.delete('/sets/:id', (req, res) => {
     .catch(err => console.error(err));
 });
 
+router.delete('/cards/batch/:set', (req, res) => {
+  const set = parseInt(req.params.set);
+
+  pool
+    .query('DELETE FROM cards WHERE set = $1', [set])
+    .then(() => res.sendStatus(200))
+    .catch(err => console.error(err));
+});
+
 router.put('/cards/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const { term, definition } = req.body;

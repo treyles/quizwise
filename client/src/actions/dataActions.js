@@ -43,7 +43,7 @@ export const deleteCard = id => (dispatch, getState) => {
 
   axios
     .delete(`/api/cards/${id}`)
-    // update number of terms for set cards
+    // first update number of terms for set card ui
     .then(() => axios.put(`/api/sets/${currentSet}`))
     .then(() => {
       dispatch({
@@ -60,11 +60,12 @@ export const deleteSet = id => (dispatch, getState) => {
   axios
     .delete(`/api/sets/${id}`)
     .then(() => {
-      // NEED TO DELETE CARD TOO
       dispatch({
         type: DELETE_SET,
         sets: sets.filter(set => set.id !== id)
       });
     })
+    // batch delete cards associated with set
+    .then(() => axios.delete(`/api/cards/batch/${id}`))
     .catch(err => console.error(err));
 };

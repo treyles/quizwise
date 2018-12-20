@@ -32,7 +32,18 @@ class Home extends React.Component {
 
   render() {
     const { isModalOpen } = this.state;
-    const { sets } = this.props;
+    const { sets, setsLoading } = this.props;
+
+    const placeholder = [...Array(3)].map((_, index) => (
+      <div key={index} className="placeholder" />
+    ));
+
+    const emptyMessage = (
+      <div className="empty-message">
+        <h2>{"You don't have any sets yet"}</h2>
+        <h4>CREATE A SET TO START STUDYING</h4>
+      </div>
+    );
 
     return (
       <React.Fragment>
@@ -51,6 +62,8 @@ class Home extends React.Component {
           </div>
         </header>
         <div className="set-container">
+          {setsLoading && placeholder}
+          {!setsLoading && !sets.length && emptyMessage}
           {sets.map(set => <SetCard key={set.id} data={set} />)}
         </div>
         {isModalOpen && (
@@ -64,7 +77,8 @@ class Home extends React.Component {
 // export default Home;
 
 const mapStateToProps = state => ({
-  sets: state.data.sets
+  sets: state.data.sets,
+  setsLoading: state.data.setsLoading
 });
 
 export default connect(mapStateToProps, { fetchSets, clearCollection })(

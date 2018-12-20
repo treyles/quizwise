@@ -58,5 +58,16 @@
   flex-wrap: wrap;
   padding: 30px;
   padding-top: 170px;
-  // background: peru;
+  width: 100vw;
+  height: 100vh;
+
+  .placeholder {
+    width: 275px;
+    height: 304px;
+    margin: 24px;
+    margin-bottom: 80px;
+    background: #606977;
+    border-radius: 0 0 0.25rem 0.25rem;
+    animation: pulse 0.7s ease infinite alternate;
+  }
 }
