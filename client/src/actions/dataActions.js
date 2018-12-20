@@ -8,28 +8,32 @@ import {
 } from './types';
 
 export const fetchSets = () => dispatch => {
-  axios
-    .get('/api/sets')
-    .then(res => {
-      dispatch({
-        type: FETCH_SETS,
-        sets: res.data
-      });
-    })
-    .catch(err => console.error(err));
+  setTimeout(() => {
+    axios
+      .get('/api/sets')
+      .then(res => {
+        dispatch({
+          type: FETCH_SETS,
+          sets: res.data
+        });
+      })
+      .catch(err => console.error(err));
+  }, 1000);
 };
 
 export const fetchCollection = id => dispatch => {
-  axios
-    .get(`/api/collection/${id}`)
-    .then(res => {
-      dispatch({
-        type: FETCH_COLLECTION,
-        cards: res.data,
-        currentSet: id
-      });
-    })
-    .catch(err => console.error(err));
+  setTimeout(() => {
+    axios
+      .get(`/api/collection/${id}`)
+      .then(res => {
+        dispatch({
+          type: FETCH_COLLECTION,
+          cards: res.data,
+          currentSet: id
+        });
+      })
+      .catch(err => console.error(err));
+  }, 700);
 };
 
 export const clearCollection = () => dispatch => {

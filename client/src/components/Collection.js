@@ -27,8 +27,8 @@ class Collection extends React.Component {
 
     const emptyMessage = (
       <div className="empty-message">
-        <h2>{"You don't have any cards yet"}</h2>
-        <h4>2 TERMS UNLOCKS STUDY SESSION</h4>
+        <h2>{"You don't have any cards in this set"}</h2>
+        <h4>CREATE 2 TERMS TO START STUDYING</h4>
       </div>
     );
 

@@ -96,10 +96,11 @@ h5 {
 // placeholder animations
 @keyframes pulse {
   from {
-    background: #606977;
+    opacity: 0.1;
   }
   to {
-    background: #626b79;
+    opacity: 1;
+    // background: lighten(#5f6776, 2%);
   }
 }
 
@@ -117,11 +118,13 @@ h5 {
   h2 {
     color: #fff;
     font-size: 1.5625rem;
-    margin-bottom: 1.1rem;
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.06rem;
   }
 
   h4 {
     color: #929bac;
-    font-size: 0.8125rem;
+    font-size: 13px;
+    letter-spacing: 0.08rem;
   }
 }

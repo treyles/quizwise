@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './Home';
 import Collection from './Collection';
-import Study from './Study';
+import StudySession from './StudySession';
 import CardForm from './CardForm';
 import NotFound from './NotFound';
 // import { connect } from 'react-redux';
@@ -18,7 +18,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/collection/:id" component={Collection} />
-          <Route path="/study" component={Study} />
+          <Route path="/study" component={StudySession} />
           <Route path="/form" component={CardForm} />
           <Route component={NotFound} />
         </Switch>
