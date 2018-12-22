@@ -8,17 +8,17 @@ import {
 } from './types';
 
 export const fetchSets = () => dispatch => {
-  setTimeout(() => {
-    axios
-      .get('/api/sets')
-      .then(res => {
-        dispatch({
-          type: FETCH_SETS,
-          sets: res.data
-        });
-      })
-      .catch(err => console.error(err));
-  }, 1000);
+  // setTimeout(() => {
+  axios
+    .get('/api/sets')
+    .then(res => {
+      dispatch({
+        type: FETCH_SETS,
+        sets: res.data
+      });
+    })
+    .catch(err => console.error(err));
+  // }, 1000);
 };
 
 export const fetchCollection = id => dispatch => {
