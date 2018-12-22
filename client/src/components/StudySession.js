@@ -33,79 +33,130 @@ class StudySession extends React.Component {
     super(props);
     this.state = {
       cards: [
-        { id: 3, name: 'three' },
+        { id: 1, name: 'one' },
         { id: 2, name: 'two' },
-        { id: 1, name: 'one' }
+        { id: 3, name: 'three' }
       ],
       currentCard: 0,
       isDragging: false,
-      lastPosX: 0,
-      lastPosY: 0,
+      // lastPosX: 0,
+      // lastPosY: 0,
       moveLeft: 0,
       moveTop: 0
     };
 
     this.handlePan = this.handlePan.bind(this);
+    this.handlePanEnd = this.handlePanEnd.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
+
+    this.reload = this.reload.bind(this);
   }
 
-  handlePan(e) {
-    // console.log(e.target.classList.contains(1));
-    const elem = e.target;
+  componentDidMount() {
+    document.body.style.overflow = 'hidden';
+  }
 
-    if (!this.state.isDragging) {
-      this.setState({
-        isDragging: true,
-        lastPosX: elem.offsetLeft,
-        lastPosY: elem.offsetTop
-      });
+  componentWillUnmount() {
+    document.body.style.overflow = 'auto';
+  }
+
+  handleRemove() {
+    this.setState({
+      cards: this.state.cards.slice(1)
+    });
+  }
+
+  reload() {
+    this.setState({
+      cards: [
+        { id: 1, name: 'one' },
+        { id: 2, name: 'two' },
+        { id: 3, name: 'three' }
+      ]
+    });
+  }
+
+  // handleRemove() {
+  //   const { cards } = this.state;
+
+  //   const newCards = [
+  //     { id: 2, name: 'two' },
+  //     { id: 3, name: 'three' },
+  //     { id: 1, name: 'one' }
+  //   ];
+
+  //   this.setState({
+  //     cards: newCards
+  //   });
+  // }
+
+  handlePan(e) {
+    this.setState({
+      isDragging: true,
+      moveLeft: e.deltaX + 'px',
+      moveTop: e.deltaY + 'px'
+    });
+  }
+
+  handlePanEnd(e) {
+    if (Math.abs(e.velocity) > 3) {
+      this.handleRemove();
     }
 
-    const posX = e.deltaX + this.state.lastPosX;
-    const posY = e.deltaY + this.state.lastPosY;
-
     this.setState({
-      moveLeft: posX + 'px',
-      moveTop: posY + 'px'
+      isDragging: false,
+      moveLeft: 0,
+      moveTop: 0
     });
-    // elem.style.left = posX + 'px';
-    // elem.style.top = posY + 'px';
-
-    // console.log(e.deltaX);
-    // console.log(e.deltaX);
-    // console.log(e.target);
   }
 
   render() {
-    const { currentCard, cards, moveLeft, moveTop } = this.state;
+    const {
+      currentCard,
+      cards,
+      moveLeft,
+      moveTop,
+      isDragging
+    } = this.state;
 
     return (
       <React.Fragment>
         <Header />
         <div className="study-card-container">
           {/* wrapper has width/height explicitly set */}
+          <button className="remove-me" onClick={this.reload}>
+            reload
+          </button>
           <div className="wrapper">
-            {cards.map((card, index) => {
-              if (index === 2) {
-                return (
-                  <Hammer key={card.id} onPan={this.handlePan}>
+            {cards
+              .map((card, index) => {
+                if (index === 0) {
+                  return (
+                    <Hammer
+                      key={card.id}
+                      onPan={this.handlePan}
+                      onPanEnd={this.handlePanEnd}
+                    >
+                      <StudyCard
+                        name={card.name}
+                        top={moveTop}
+                        left={moveLeft}
+                        isDragging={isDragging}
+                      />
+                    </Hammer>
+                  );
+                } else {
+                  return (
                     <StudyCard
+                      key={card.id}
                       name={card.name}
-                      top={moveTop}
-                      left={moveLeft}
+                      // top={moveTop}
+                      // left={moveLeft}
                     />
-                  </Hammer>
-                );
-              } else {
-                return (
-                  <StudyCard
-                    key={card.id}
-                    name={card.name}
-                    // top={moveTop}
-                    // left={moveLeft}
-                  />
-                );
-              }
-            })}
+                  );
+                }
+              })
+              .reverse()}
           </div>
         </div>
       </React.Fragment>

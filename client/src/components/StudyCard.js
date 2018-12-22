@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 
 class StudyCard extends Component {
   render() {
+    const { left, top, isDragging } = this.props;
     return (
       <div>
         <div
           className="study-card"
-          style={{ left: this.props.left, top: this.props.top }}
+          style={{
+            left: left,
+            top: top,
+            transition: `${isDragging ? 'none' : '.3s ease'}`
+          }}
         >
           {this.props.name}
         </div>
