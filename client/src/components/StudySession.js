@@ -1,7 +1,10 @@
 /* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
-import Hammer from 'rc-hammerjs';
+// import Hammer from 'rc-hammerjs';
+// import { CSSTransition } from 'react-transition-group';
+import Swipeable from 'react-swipeable';
+
 import Icon from '../utils/Icon';
 import StudyCard from '../components/StudyCard';
 
@@ -33,20 +36,25 @@ class StudySession extends React.Component {
     super(props);
     this.state = {
       cards: [
-        { id: 1, name: 'one' },
-        { id: 2, name: 'two' },
-        { id: 3, name: 'three' }
+        { id: 1, name: 'one', back: 'one-back' },
+        { id: 2, name: 'two', back: 'two-back' },
+        { id: 3, name: 'three', back: 'three-back' }
       ],
       currentCard: 0,
       isDragging: false,
-      // lastPosX: 0,
-      // lastPosY: 0,
       moveLeft: 0,
-      moveTop: 0
+      moveTop: 0,
+      center: {},
+      velocity: null,
+      isFlipped: false,
+      nextOpacity: 0,
+      nextScale: 0.8
     };
 
-    this.handlePan = this.handlePan.bind(this);
-    this.handlePanEnd = this.handlePanEnd.bind(this);
+    this.handleOnSwiping = this.handleOnSwiping.bind(this);
+    this.handleOnSwiped = this.handleOnSwiped.bind(this);
+    this.handleOnSwipedLeft = this.handleOnSwipedLeft.bind(this);
+    this.handleOnTap = this.handleOnTap.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
 
     this.reload = this.reload.bind(this);
@@ -54,6 +62,8 @@ class StudySession extends React.Component {
 
   componentDidMount() {
     document.body.style.overflow = 'hidden';
+    this.clientWidth = document.body.clientWidth;
+    this.clientHeight = document.body.clientHeight;
   }
 
   componentWillUnmount() {
@@ -69,9 +79,9 @@ class StudySession extends React.Component {
   reload() {
     this.setState({
       cards: [
-        { id: 1, name: 'one' },
-        { id: 2, name: 'two' },
-        { id: 3, name: 'three' }
+        { id: 1, name: 'one', back: 'one-back' }
+        // { id: 2, name: 'two', back: 'two-back' },
+        // { id: 3, name: 'three', back: 'three-back' }
       ]
     });
   }
@@ -90,33 +100,69 @@ class StudySession extends React.Component {
   //   });
   // }
 
-  handlePan(e) {
+  handleOnSwiping(e, deltaX, deltaY) {
+    const cardWidth = this.swipable.element.clientWidth;
+    const maxMove = cardWidth / 2;
+    const animationValue = Math.abs(deltaX) / maxMove;
+    const finalValue = animationValue > 1 ? 1 : animationValue;
+
+    const scaleValue = 0.2 * animationValue + 0.8;
+
     this.setState({
       isDragging: true,
-      moveLeft: e.deltaX + 'px',
-      moveTop: e.deltaY + 'px'
+      moveLeft: -deltaX,
+      nextOpacity: finalValue,
+      nextScale: scaleValue > 1 ? 1 : scaleValue
+      // moveTop: -deltaY
     });
   }
 
-  handlePanEnd(e) {
-    if (Math.abs(e.velocity) > 3) {
-      this.handleRemove();
-    }
-
+  handleOnSwiped(e, deltaX, deltaY, isFlick, velocity) {
     this.setState({
       isDragging: false,
       moveLeft: 0,
-      moveTop: 0
+      // moveTop: 0,
+      velocity: velocity,
+      nextOpacity: 0,
+      nextScale: 0.8
+    });
+  }
+
+  handleOnSwipedLeft(e, deltaY) {
+    const cardWidth = this.cardWrapper.clientWidth;
+    const docWidth = document.body.clientWidth;
+    // const moveOutAmount = docWidth - cardWidth;
+
+    if (this.state.velocity > 1.5) {
+      this.setState({
+        isDragging: false,
+        moveLeft: -docWidth
+      });
+
+      // wait for card to animate out of view before removing
+      // and resetting x position for next card
+      setTimeout(() => {
+        this.handleRemove();
+        this.setState({ moveLeft: 0 });
+      }, 500);
+    }
+  }
+
+  handleOnTap() {
+    this.setState({
+      isFlipped: !this.state.isFlipped
     });
   }
 
   render() {
     const {
-      currentCard,
+      isFlipped,
       cards,
       moveLeft,
       moveTop,
-      isDragging
+      isDragging,
+      nextOpacity,
+      nextScale
     } = this.state;
 
     return (
@@ -127,29 +173,46 @@ class StudySession extends React.Component {
           <button className="remove-me" onClick={this.reload}>
             reload
           </button>
-          <div className="wrapper">
+          <div
+            className="wrapper"
+            ref={card => {
+              this.cardWrapper = card;
+            }}
+          >
             {cards
               .map((card, index) => {
                 if (index === 0) {
                   return (
-                    <Hammer
+                    <Swipeable
                       key={card.id}
-                      onPan={this.handlePan}
-                      onPanEnd={this.handlePanEnd}
+                      trackMouse
+                      onSwiping={this.handleOnSwiping}
+                      onSwiped={this.handleOnSwiped}
+                      onSwipedLeft={this.handleOnSwipedLeft}
+                      onTap={this.handleOnTap}
+                      ref={swipable => {
+                        this.swipable = swipable;
+                      }}
                     >
                       <StudyCard
-                        name={card.name}
+                        card={card}
                         top={moveTop}
                         left={moveLeft}
                         isDragging={isDragging}
+                        isFlipped={isFlipped}
                       />
-                    </Hammer>
+                    </Swipeable>
                   );
                 } else {
                   return (
                     <StudyCard
                       key={card.id}
-                      name={card.name}
+                      card={card}
+                      isDragging={isDragging}
+                      isNextCard
+                      nextOpacity={nextOpacity}
+                      nextScale={nextScale}
+
                       // top={moveTop}
                       // left={moveLeft}
                     />
@@ -165,3 +228,20 @@ class StudySession extends React.Component {
 }
 
 export default StudySession;
+
+// if (index < currentCard) {
+//   return (
+//     <StudyCard
+//       removed={true}
+//       card={card}
+//       key={card.id}
+//       isDragging={isDragging}
+//       // top={moveTop}
+//       // left={moveLeft}
+//     />
+//   );
+// } else
+
+// timeout
+//classNames
+// onExited
