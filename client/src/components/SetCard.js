@@ -25,9 +25,7 @@ class SetCard extends Component {
     if (t.contains('set-card')) {
       history.push({
         pathname: `/collection/${data.id}`,
-        state: {
-          id: data.id
-        }
+        state: { id: data.id }
       });
     }
 
@@ -36,7 +34,10 @@ class SetCard extends Component {
     }
 
     if (t.contains('session-button')) {
-      console.log('the session button');
+      history.push({
+        pathname: `/study/${data.id}`,
+        state: { id: data.id }
+      });
     }
   }
 

@@ -95,5 +95,12 @@
     position: relative;
     width: 440px;
     height: 500px;
+
+    button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50deg) translateY(-50deg);
+    }
   }
 }

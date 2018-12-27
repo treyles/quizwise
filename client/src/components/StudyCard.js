@@ -28,17 +28,17 @@ class StudyCard extends Component {
       removed,
       card,
       left,
-      top,
       isDragging,
       isFlipped,
       isNextCard,
       nextOpacity,
-      nextScale
+      nextScale,
+      currentRotation
     } = this.props;
 
     const currentCardStyle = {
       left: `${left}px`,
-      top: `${top}px`,
+      transform: `rotate(${currentRotation}deg)`,
       transition: `${isDragging ? 'none' : '.4s ease'}`
     };
 
@@ -52,7 +52,7 @@ class StudyCard extends Component {
       <React.Fragment>
         <div
           className="study-card"
-          dataattribute={card.id}
+          data-swiped={card.id}
           style={isNextCard ? nextCardStyle : currentCardStyle}
         >
           <div className={`content ${isFlipped ? 'flipped' : ''}`}>
