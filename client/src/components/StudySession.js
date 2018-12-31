@@ -3,13 +3,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-// import Hammer from 'rc-hammerjs';
-// import { CSSTransition } from 'react-transition-group';
 import Swipeable from 'react-swipeable';
 
 import Icon from '../utils/Icon';
 import StudyCard from '../components/StudyCard';
-import { fetchCollection } from '../actions';
+import {
+  fetchCollection,
+  fetchSession,
+  removeSessionCard,
+  loadSkippedCards,
+  reloadSessionCards,
+  clearSession
+} from '../actions';
 
 // TODO: put in it's own component
 function Header() {
@@ -37,18 +42,10 @@ function Header() {
   );
 }
 
-const testCards = [
-  { id: 1, name: 'one', back: 'one-back' },
-  { id: 2, name: 'two', back: 'two-back' },
-  { id: 3, name: 'three', back: 'three-back' },
-  { id: 4, name: 'four', back: 'four-back' }
-];
-
 class StudySession extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: testCards,
       skippedCards: [],
       isDragging: false,
       moveLeft: 0,
@@ -62,26 +59,23 @@ class StudySession extends React.Component {
     this.handleOnSwiping = this.handleOnSwiping.bind(this);
     this.handleOnSwiped = this.handleOnSwiped.bind(this);
     this.handleOnSwipedLeft = this.handleOnSwipedLeft.bind(this);
-    // this.handleOnSwipedRight = this.handleOnSwipedRight.bind(this);
     this.handleOnTap = this.handleOnTap.bind(this);
-
     this.handleLoadSkipped = this.handleLoadSkipped.bind(this);
+    this.reloadAllCards = this.reloadAllCards.bind(this);
   }
 
   componentDidMount() {
-    // const routerState = this.props.location.state;
-    // this.props.fetchCollection(routerState.id);
+    const routerState = this.props.location.state;
+    this.props.fetchSession(routerState.id);
 
     document.body.style.overflow = 'hidden';
     this.clientWidth = document.body.clientWidth;
     this.clientHeight = document.body.clientHeight;
-
-    console.log('component mounted');
-    // console.log(this.props.cards);
   }
 
   componentWillUnmount() {
     document.body.style.overflow = 'auto';
+    this.props.clearSession();
   }
 
   handleOnSwiping(e, deltaX, deltaY) {
@@ -124,22 +118,12 @@ class StudySession extends React.Component {
     const cardId = parseInt(
       this.swipable.element.firstChild.getAttribute('data-swiped')
     );
+    const newCard = this.props.cards.filter(card => card.id === cardId);
 
     if (this.state.velocity > 1.5) {
-      this.setState({
-        skippedCards: skippedCards.concat(cardId)
-      });
-
+      this.setState({ skippedCards: skippedCards.concat(newCard) });
       this.animateSwipe(true);
     }
-  }
-
-  handleRemove() {
-    const { cards } = this.state;
-
-    this.setState({
-      cards: cards.filter((_, index) => index !== 0)
-    });
   }
 
   handleOnTap() {
@@ -149,18 +133,9 @@ class StudySession extends React.Component {
   }
 
   handleLoadSkipped() {
-    const { skippedCards } = this.state;
-
-    const testOutput = testCards.filter(card => {
-      return skippedCards.some(skipped => {
-        return card.id === skipped;
-      });
-    });
-
-    this.setState({
-      cards: testOutput,
-      skippedCards: []
-    });
+    this.props.loadSkippedCards(this.state.skippedCards);
+    // TODO: handle skippedCards in redux?
+    this.setState({ skippedCards: [] });
   }
 
   animateSwipe(isLeft) {
@@ -178,7 +153,7 @@ class StudySession extends React.Component {
       // wait for card to animate out of view before
       // removing and resetting defaults for next card
       setTimeout(() => {
-        this.handleRemove();
+        this.props.removeSessionCard();
         this.setState({
           moveLeft: 0,
           nextOpacity: 0,
@@ -190,10 +165,14 @@ class StudySession extends React.Component {
     }
   }
 
+  reloadAllCards() {
+    this.props.reloadSessionCards();
+    this.setState({ skippedCards: [] });
+  }
+
   render() {
     const {
       isFlipped,
-      cards,
       moveLeft,
       isDragging,
       nextOpacity,
@@ -201,13 +180,15 @@ class StudySession extends React.Component {
       currentRotation
     } = this.state;
 
+    const { sessionCards } = this.props;
+
     return (
       <React.Fragment>
         <Header />
         <div className="study-card-container">
           {/* wrapper has width/height explicitly set */}
           <div className="wrapper">
-            {cards
+            {sessionCards
               .map((card, index) => {
                 if (index === 0) {
                   return (
@@ -246,10 +227,11 @@ class StudySession extends React.Component {
                 }
               })
               .reverse()}
-            {!cards.length && (
-              <button onClick={this.handleLoadSkipped}>
-                load skipped
-              </button>
+            {!sessionCards.length && (
+              <div className="reload-buttons">
+                <button onClick={this.handleLoadSkipped}>skipped</button>
+                <button onClick={this.reloadAllCards}>all</button>
+              </div>
             )}
           </div>
         </div>
@@ -261,10 +243,18 @@ class StudySession extends React.Component {
 // export default StudySession;
 
 const mapStateToProps = state => ({
-  cards: state.data.cards
+  cards: state.data.cards,
+  sessionCards: state.data.sessionCards
   // setsLoading: state.data.setsLoading
 });
 
 export default withRouter(
-  connect(mapStateToProps, { fetchCollection })(StudySession)
+  connect(mapStateToProps, {
+    fetchCollection,
+    fetchSession,
+    removeSessionCard,
+    loadSkippedCards,
+    reloadSessionCards,
+    clearSession
+  })(StudySession)
 );

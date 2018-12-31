@@ -3,6 +3,11 @@ import {
   FETCH_SETS,
   FETCH_COLLECTION,
   CLEAR_COLLECTION,
+  FETCH_SESSION,
+  REMOVE_SESSION_CARD,
+  LOAD_SKIPPED_CARDS,
+  RELOAD_SESSION_CARDS,
+  CLEAR_SESSION,
   DELETE_CARD,
   DELETE_SET
 } from './types';
@@ -39,6 +44,49 @@ export const fetchCollection = id => dispatch => {
 export const clearCollection = () => dispatch => {
   dispatch({
     type: CLEAR_COLLECTION
+  });
+};
+
+export const fetchSession = id => dispatch => {
+  axios
+    .get(`/api/collection/${id}`)
+    .then(res => {
+      dispatch({
+        type: FETCH_SESSION,
+        cards: res.data,
+        sessionCards: res.data,
+        currentSet: id
+      });
+    })
+    .catch(err => console.error(err));
+};
+
+export const removeSessionCard = () => (dispatch, getState) => {
+  const { sessionCards } = getState().data;
+
+  dispatch({
+    type: REMOVE_SESSION_CARD,
+    sessionCards: sessionCards.slice(1)
+  });
+};
+
+export const loadSkippedCards = cards => dispatch => {
+  dispatch({
+    type: LOAD_SKIPPED_CARDS,
+    sessionCards: cards
+  });
+};
+
+export const reloadSessionCards = () => (dispatch, getState) => {
+  dispatch({
+    type: RELOAD_SESSION_CARDS,
+    sessionCards: getState().data.cards
+  });
+};
+
+export const clearSession = () => dispatch => {
+  dispatch({
+    type: CLEAR_SESSION
   });
 };
 
