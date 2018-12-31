@@ -2,51 +2,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Swipeable from 'react-swipeable';
-
-import Icon from '../utils/Icon';
+// import Icon from '../utils/Icon';
 import StudyCard from '../components/StudyCard';
+import StudyHeader from '../components/StudyHeader';
+
 import {
   fetchCollection,
   fetchSession,
   removeSessionCard,
   loadSkippedCards,
   reloadSessionCards,
+  shuffleSessionCards,
+  orderSessionCards,
   clearSession
 } from '../actions';
-
-// TODO: put in it's own component
-function Header() {
-  return (
-    <header className="study-header">
-      <div className="back">
-        <Link to="/">
-          <span className="back-container">
-            <Icon icon="backButton" />
-            <span>
-              <h5>BACK TO SETS</h5>
-            </span>
-          </span>
-        </Link>
-      </div>
-      <div className="title">
-        <h4>TECHNICAL QUESTIONS</h4>
-      </div>
-      <div className="shuffle">
-        <button>
-          <h5>SHUFFLE</h5>
-        </button>
-      </div>
-    </header>
-  );
-}
 
 class StudySession extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       skippedCards: [],
+      isShuffled: false,
       isDragging: false,
       moveLeft: 0,
       velocity: null,
@@ -60,8 +38,9 @@ class StudySession extends React.Component {
     this.handleOnSwiped = this.handleOnSwiped.bind(this);
     this.handleOnSwipedLeft = this.handleOnSwipedLeft.bind(this);
     this.handleOnTap = this.handleOnTap.bind(this);
-    this.handleLoadSkipped = this.handleLoadSkipped.bind(this);
-    this.reloadAllCards = this.reloadAllCards.bind(this);
+    this.handleLoadSkippedClick = this.handleLoadSkippedClick.bind(this);
+    this.handleReloadAllClick = this.handleReloadAllClick.bind(this);
+    this.handleShuffleClick = this.handleShuffleClick.bind(this);
   }
 
   componentDidMount() {
@@ -126,16 +105,42 @@ class StudySession extends React.Component {
     }
   }
 
+  handleShuffleClick() {
+    const { isShuffled } = this.state;
+
+    if (isShuffled) {
+      this.props.orderSessionCards();
+    } else {
+      this.props.shuffleSessionCards();
+    }
+
+    this.setState({
+      isShuffled: !isShuffled
+    });
+  }
+
+  handleLoadSkippedClick() {
+    this.props.loadSkippedCards(this.state.skippedCards);
+
+    this.setState({
+      skippedCards: [],
+      isShuffled: false
+    });
+  }
+
+  handleReloadAllClick() {
+    this.props.reloadSessionCards();
+
+    this.setState({
+      skippedCards: [],
+      isShuffled: false
+    });
+  }
+
   handleOnTap() {
     this.setState({
       isFlipped: !this.state.isFlipped
     });
-  }
-
-  handleLoadSkipped() {
-    this.props.loadSkippedCards(this.state.skippedCards);
-    // TODO: handle skippedCards in redux?
-    this.setState({ skippedCards: [] });
   }
 
   animateSwipe(isLeft) {
@@ -165,14 +170,10 @@ class StudySession extends React.Component {
     }
   }
 
-  reloadAllCards() {
-    this.props.reloadSessionCards();
-    this.setState({ skippedCards: [] });
-  }
-
   render() {
     const {
       isFlipped,
+      isShuffled,
       moveLeft,
       isDragging,
       nextOpacity,
@@ -184,7 +185,11 @@ class StudySession extends React.Component {
 
     return (
       <React.Fragment>
-        <Header />
+        <StudyHeader
+          handleShuffleClick={this.handleShuffleClick}
+          isShuffled={isShuffled}
+          setId={this.props.match.params.id}
+        />
         <div className="study-card-container">
           {/* wrapper has width/height explicitly set */}
           <div className="wrapper">
@@ -229,8 +234,10 @@ class StudySession extends React.Component {
               .reverse()}
             {!sessionCards.length && (
               <div className="reload-buttons">
-                <button onClick={this.handleLoadSkipped}>skipped</button>
-                <button onClick={this.reloadAllCards}>all</button>
+                <button onClick={this.handleLoadSkippedClick}>
+                  skipped
+                </button>
+                <button onClick={this.handleReloadAllClick}>all</button>
               </div>
             )}
           </div>
@@ -255,6 +262,8 @@ export default withRouter(
     removeSessionCard,
     loadSkippedCards,
     reloadSessionCards,
+    shuffleSessionCards,
+    orderSessionCards,
     clearSession
   })(StudySession)
 );

@@ -1,5 +1,5 @@
 Arguments: 
-  /Users/troy/.nvm/versions/node/v8.11.4/bin/node /usr/local/Cellar/yarn/1.3.2/libexec/bin/yarn.js add import Draggable from react-draggable
+  /Users/troy/.nvm/versions/node/v8.11.4/bin/node /usr/local/Cellar/yarn/1.3.2/libexec/bin/yarn.js add lodah.shuffle --dev
 
 PATH: 
   /Users/troy/.nvm/versions/node/v8.11.4/bin:/Users/troy/google-cloud-sdk/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/troy/google-cloud-sdk/bin
@@ -57,8 +57,11 @@ npm manifest:
       "node-sass": "^4.5.3",
       "postcss-loader": "^2.0.8",
       "prettier": "^1.7.4",
+      "react-flippy": "^0.1.2",
       "react-redux": "^5.0.7",
       "react-router-dom": "^4.3.1",
+      "react-swipeable": "^4.3.1",
+      "react-transition-group": "^2.5.2",
       "redux": "^4.0.0",
       "redux-devtools-extension": "^2.13.7",
       "redux-thunk": "^2.3.0",
@@ -1852,6 +1855,10 @@ Lockfile:
     version "2.0.3"
     resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.0.3.tgz#a2033c09cc8e158d37748fbde7507832bd6ce127"
   
+  detect-passive-events@^1.0.4:
+    version "1.0.4"
+    resolved "https://registry.yarnpkg.com/detect-passive-events/-/detect-passive-events-1.0.4.tgz#6ed477e6e5bceb79079735dcd357789d37f9a91a"
+  
   diffie-hellman@^5.0.0:
     version "5.0.2"
     resolved "https://registry.yarnpkg.com/diffie-hellman/-/diffie-hellman-5.0.2.tgz#b5835739270cfe26acf632099fded2a07f209e5e"
@@ -1896,6 +1903,12 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/dom-converter/-/dom-converter-0.1.4.tgz#a45ef5727b890c9bffe6d7c876e7b19cb0e17f3b"
     dependencies:
       utila "~0.3"
+  
+  dom-helpers@^3.3.1:
+    version "3.4.0"
+    resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-3.4.0.tgz#e9b369700f959f62ecde5a6babde4bccd9169af8"
+    dependencies:
+      "@babel/runtime" "^7.1.2"
   
   dom-serializer@0:
     version "0.1.0"
@@ -4495,7 +4508,7 @@ Lockfile:
       loose-envify "^1.3.1"
       object-assign "^4.1.1"
   
-  prop-types@^15.6.1, prop-types@^15.6.2:
+  prop-types@^15.5.8, prop-types@^15.6.1, prop-types@^15.6.2:
     version "15.6.2"
     resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
     dependencies:
@@ -4618,11 +4631,15 @@ Lockfile:
       prop-types "^15.6.2"
       scheduler "^0.11.2"
   
+  react-flippy@^0.1.2:
+    version "0.1.2"
+    resolved "https://registry.yarnpkg.com/react-flippy/-/react-flippy-0.1.2.tgz#8055c9be3f4c530831ef2920e16f005e61d18eec"
+  
   react-is@^16.3.2, react-is@^16.6.0:
     version "16.6.3"
     resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.6.3.tgz#d2d7462fcfcbe6ec0da56ad69047e47e56e7eac0"
   
-  react-lifecycles-compat@^3.0.0:
+  react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
     version "3.0.4"
     resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   
@@ -4660,6 +4677,22 @@ Lockfile:
       path-to-regexp "^1.7.0"
       prop-types "^15.6.1"
       warning "^4.0.1"
+  
+  react-swipeable@^4.3.1:
+    version "4.3.1"
+    resolved "https://registry.yarnpkg.com/react-swipeable/-/react-swipeable-4.3.1.tgz#9b78da9d3a7a29dabda347ee1cd10452cb171806"
+    dependencies:
+      detect-passive-events "^1.0.4"
+      prop-types "^15.5.8"
+  
+  react-transition-group@^2.5.2:
+    version "2.5.2"
+    resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.5.2.tgz#9457166a9ba6ce697a3e1b076b3c049b9fb2c408"
+    dependencies:
+      dom-helpers "^3.3.1"
+      loose-envify "^1.4.0"
+      prop-types "^15.6.2"
+      react-lifecycles-compat "^3.0.4"
   
   react@^16.2.0:
     version "16.6.3"
@@ -5971,7 +6004,7 @@ Lockfile:
       window-size "0.1.0"
 
 Trace: 
-  Error: https://registry.yarnpkg.com/Draggable: Not found
+  Error: https://registry.yarnpkg.com/lodah.shuffle: Not found
       at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.3.2/libexec/lib/cli.js:62098:18)
       at Request.self.callback (/usr/local/Cellar/yarn/1.3.2/libexec/lib/cli.js:123085:22)
       at emitTwo (events.js:126:13)

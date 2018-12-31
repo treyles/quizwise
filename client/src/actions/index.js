@@ -6,6 +6,8 @@ export {
   removeSessionCard,
   loadSkippedCards,
   reloadSessionCards,
+  shuffleSessionCards,
+  orderSessionCards,
   clearSession,
   deleteCard,
   deleteSet

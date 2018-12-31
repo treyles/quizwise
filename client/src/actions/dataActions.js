@@ -1,4 +1,7 @@
 import axios from 'axios';
+import shuffle from 'lodash/shuffle';
+import orderBy from 'lodash/orderBy';
+
 import {
   FETCH_SETS,
   FETCH_COLLECTION,
@@ -7,6 +10,8 @@ import {
   REMOVE_SESSION_CARD,
   LOAD_SKIPPED_CARDS,
   RELOAD_SESSION_CARDS,
+  SHUFFLE_SESSION_CARDS,
+  ORDER_SESSION_CARDS,
   CLEAR_SESSION,
   DELETE_CARD,
   DELETE_SET
@@ -73,7 +78,7 @@ export const removeSessionCard = () => (dispatch, getState) => {
 export const loadSkippedCards = cards => dispatch => {
   dispatch({
     type: LOAD_SKIPPED_CARDS,
-    sessionCards: cards
+    sessionCards: orderBy(cards, 'id', 'desc')
   });
 };
 
@@ -81,6 +86,24 @@ export const reloadSessionCards = () => (dispatch, getState) => {
   dispatch({
     type: RELOAD_SESSION_CARDS,
     sessionCards: getState().data.cards
+  });
+};
+
+export const shuffleSessionCards = () => (dispatch, getState) => {
+  const { sessionCards } = getState().data;
+
+  dispatch({
+    type: SHUFFLE_SESSION_CARDS,
+    sessionCards: shuffle(sessionCards)
+  });
+};
+
+export const orderSessionCards = () => (dispatch, getState) => {
+  const { sessionCards } = getState().data;
+
+  dispatch({
+    type: ORDER_SESSION_CARDS,
+    sessionCards: orderBy(sessionCards, 'id', 'desc')
   });
 };
 

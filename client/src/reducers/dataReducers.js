@@ -6,6 +6,8 @@ import {
   REMOVE_SESSION_CARD,
   LOAD_SKIPPED_CARDS,
   RELOAD_SESSION_CARDS,
+  SHUFFLE_SESSION_CARDS,
+  ORDER_SESSION_CARDS,
   CLEAR_SESSION,
   DELETE_CARD,
   DELETE_SET
@@ -45,8 +47,8 @@ export default function data(state = initialState, action) {
       return {
         ...state,
         sessionCards: action.sessionCards,
-        cards: action.cards
-        // currentSet: null,
+        cards: action.cards,
+        currentSet: action.currentSet
         // cardsLoading: true
       };
     case REMOVE_SESSION_CARD:
@@ -68,6 +70,18 @@ export default function data(state = initialState, action) {
       };
 
     case RELOAD_SESSION_CARDS:
+      return {
+        ...state,
+        sessionCards: action.sessionCards
+      };
+
+    case SHUFFLE_SESSION_CARDS:
+      return {
+        ...state,
+        sessionCards: action.sessionCards
+      };
+
+    case ORDER_SESSION_CARDS:
       return {
         ...state,
         sessionCards: action.sessionCards
