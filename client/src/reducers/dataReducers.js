@@ -18,7 +18,8 @@ const initialState = {
   cards: [],
   sessionCards: [],
   setsLoading: true,
-  cardsLoading: true
+  cardsLoading: true,
+  sessionLoading: true
 };
 
 export default function data(state = initialState, action) {
@@ -41,14 +42,18 @@ export default function data(state = initialState, action) {
         ...state,
         cards: [],
         currentSet: null,
-        cardsLoading: true
+        cardsLoading: true,
+        sessionLoading: true,
+        setName: null
       };
     case FETCH_SESSION:
       return {
         ...state,
         sessionCards: action.sessionCards,
         cards: action.cards,
-        currentSet: action.currentSet
+        setName: action.setName,
+        sessionLoading: false
+        // currentSet: action.currentSet
         // cardsLoading: true
       };
     case REMOVE_SESSION_CARD:

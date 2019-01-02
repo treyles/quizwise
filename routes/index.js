@@ -27,6 +27,15 @@ router.get('/sets', (req, res) => {
     .catch(e => console.error(e));
 });
 
+router.get('/sets/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+
+  pool
+    .query('SELECT * FROM sets WHERE id = $1', [id])
+    .then(result => res.json(result.rows))
+    .catch(e => console.error(e));
+});
+
 router.get('/collection/:id', (req, res) => {
   const id = parseInt(req.params.id);
   // const testPath = path.join(__dirname + '/../client/dist/index.html');

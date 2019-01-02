@@ -11,45 +11,34 @@ class StudyHeader extends Component {
   // constructor(props) {
   //   super(props);
   //   this.state = {
-  //     isShuffled: false
+  //     arrayL: null
   //   };
 
   //   // this.handleShuffleClick = this.handleShuffleClick.bind(this);
   // }
 
-  // handleShuffleClick() {
-  //   const { isShuffled } = this.state;
-
-  //   if (isShuffled) {
-  //     this.props.orderSessionCards();
-  //   } else {
-  //     this.props.shuffleSessionCards();
-  //   }
-
+  // componentDidMount() {
   //   this.setState({
-  //     isShuffled: !isShuffled
+  //     arrayL: this.props.sessionCards.length
   //   });
   // }
-  componentDidMount() {
-    const { setId, sets } = this.props;
-
-    // This doesn't work because sets (via redux) is empty on refresh
-    setTimeout(function() {
-      const title = sets.filter(set => set.id === setId);
-      console.log(title);
-    }, 3000);
-  }
 
   render() {
     const {
       handleShuffleClick,
       isShuffled,
-      currentSet,
-      sets
+      setName,
+      cards,
+      sessionCards
     } = this.props;
+
+    const progressBarStyle = {
+      width: `${Math.trunc(sessionCards.length / cards.length * 100)}%`
+    };
 
     return (
       <header className="study-header">
+        <div className="progress-bar" style={progressBarStyle} />
         <div className="back">
           <Link to="/">
             <span className="back-container">
@@ -61,8 +50,8 @@ class StudyHeader extends Component {
           </Link>
         </div>
         <div className="title">
-          {/* <h4>{title}</h4> */}
-          {/* <h4>{title}</h4> */}
+          <h4>{setName && setName.toUpperCase()}</h4>
+          {/* <h4>{Math.trunc(sessionCards.length / cards.length * 100)}</h4> */}
         </div>
         <div className="shuffle">
           <button onClick={() => handleShuffleClick()}>
@@ -76,7 +65,9 @@ class StudyHeader extends Component {
 
 const mapStateToProps = state => ({
   sets: state.data.sets,
-  currentSet: state.data.currentSet
+  setName: state.data.setName,
+  cards: state.data.cards,
+  sessionCards: state.data.sessionCards
   // setsLoading: state.data.setsLoading
 });
 

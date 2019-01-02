@@ -180,8 +180,14 @@ class StudySession extends React.Component {
       nextScale,
       currentRotation
     } = this.state;
+    const { sessionCards, sessionLoading } = this.props;
 
-    const { sessionCards } = this.props;
+    const reloadButtons = (
+      <div className="reload-buttons">
+        <button onClick={this.handleLoadSkippedClick}>skipped</button>
+        <button onClick={this.handleReloadAllClick}>all</button>
+      </div>
+    );
 
     return (
       <React.Fragment>
@@ -232,14 +238,7 @@ class StudySession extends React.Component {
                 }
               })
               .reverse()}
-            {!sessionCards.length && (
-              <div className="reload-buttons">
-                <button onClick={this.handleLoadSkippedClick}>
-                  skipped
-                </button>
-                <button onClick={this.handleReloadAllClick}>all</button>
-              </div>
-            )}
+            {!sessionCards.length && !sessionLoading && reloadButtons}
           </div>
         </div>
       </React.Fragment>
@@ -251,7 +250,8 @@ class StudySession extends React.Component {
 
 const mapStateToProps = state => ({
   cards: state.data.cards,
-  sessionCards: state.data.sessionCards
+  sessionCards: state.data.sessionCards,
+  sessionLoading: state.data.sessionLoading
   // setsLoading: state.data.setsLoading
 });
 

@@ -1,6 +1,6 @@
 .study-header {
   z-index: 999;
-  position: fixed;
+  // position: fixed;
   width: 100%;
   display: flex;
   // justify-content: space-between;
@@ -22,6 +22,16 @@
     flex: 1;
     display: flex;
     justify-content: center;
+  }
+
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 10px;
+    width: 100%;
+    background: $placeholder-text;
+    transition: 1s cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   .back {

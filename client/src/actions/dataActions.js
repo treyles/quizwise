@@ -56,11 +56,13 @@ export const fetchSession = id => dispatch => {
   axios
     .get(`/api/collection/${id}`)
     .then(res => {
-      dispatch({
-        type: FETCH_SESSION,
-        cards: res.data,
-        sessionCards: res.data,
-        currentSet: id
+      axios.get(`/api/sets/${id}`).then(response => {
+        dispatch({
+          type: FETCH_SESSION,
+          cards: res.data,
+          sessionCards: res.data,
+          setName: response.data[0].name
+        });
       });
     })
     .catch(err => console.error(err));
