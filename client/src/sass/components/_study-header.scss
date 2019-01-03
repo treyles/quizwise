@@ -30,7 +30,7 @@
     left: 0;
     height: 10px;
     width: 100%;
-    background: $placeholder-text;
+    background: #929bac;
     transition: 1s cubic-bezier(0.23, 1, 0.32, 1);
   }
 
@@ -81,6 +81,7 @@
       width: 102px;
       height: 36px;
       border-radius: 4px;
+      // border-radius: 500px;
       letter-spacing: 0.1rem;
       background: $dark-button;
       cursor: pointer;

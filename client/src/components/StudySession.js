@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Swipeable from 'react-swipeable';
-// import Icon from '../utils/Icon';
 import StudyCard from '../components/StudyCard';
 import StudyHeader from '../components/StudyHeader';
+import Icon from '../utils/Icon';
 
 import {
   fetchCollection,
@@ -31,16 +31,19 @@ class StudySession extends React.Component {
       isFlipped: false,
       nextOpacity: 0,
       nextScale: 0.8,
-      currentRotation: 0
+      currentRotation: 0,
+      isAnimating: false
     };
 
     this.handleOnSwiping = this.handleOnSwiping.bind(this);
     this.handleOnSwiped = this.handleOnSwiped.bind(this);
     this.handleOnSwipedLeft = this.handleOnSwipedLeft.bind(this);
+    this.handleOnSwipedRight = this.handleOnSwipedRight.bind(this);
     this.handleOnTap = this.handleOnTap.bind(this);
     this.handleLoadSkippedClick = this.handleLoadSkippedClick.bind(this);
     this.handleReloadAllClick = this.handleReloadAllClick.bind(this);
     this.handleShuffleClick = this.handleShuffleClick.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   componentDidMount() {
@@ -48,13 +51,32 @@ class StudySession extends React.Component {
     this.props.fetchSession(routerState.id);
 
     document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', this.handleKeyPress);
     this.clientWidth = document.body.clientWidth;
     this.clientHeight = document.body.clientHeight;
   }
 
   componentWillUnmount() {
     document.body.style.overflow = 'auto';
+    document.removeEventListener('keydown', this.handleKeyPress);
     this.props.clearSession();
+  }
+
+  handleKeyPress(e) {
+    if (this.state.isAnimating) return;
+
+    switch (e.key) {
+      case 'ArrowUp':
+      case 'ArrowDown':
+        this.setState({ isFlipped: !this.state.isFlipped });
+        break;
+      case 'ArrowLeft':
+        this.handleOnSwipedLeft(false);
+        break;
+      case 'ArrowRight':
+        this.handleOnSwipedRight(false);
+        break;
+    }
   }
 
   handleOnSwiping(e, deltaX, deltaY) {
@@ -92,16 +114,22 @@ class StudySession extends React.Component {
     });
   }
 
-  handleOnSwipedLeft(e) {
+  handleOnSwipedLeft(isSwiped) {
     const { skippedCards } = this.state;
     const cardId = parseInt(
       this.swipable.element.firstChild.getAttribute('data-swiped')
     );
     const newCard = this.props.cards.filter(card => card.id === cardId);
 
-    if (this.state.velocity > 1.5) {
+    if (this.state.velocity > 1.5 || !isSwiped) {
       this.setState({ skippedCards: skippedCards.concat(newCard) });
       this.animateSwipe(true);
+    }
+  }
+
+  handleOnSwipedRight(isSwiped) {
+    if (this.state.velocity > 1.5 || !isSwiped) {
+      this.animateSwipe(false);
     }
   }
 
@@ -114,9 +142,7 @@ class StudySession extends React.Component {
       this.props.shuffleSessionCards();
     }
 
-    this.setState({
-      isShuffled: !isShuffled
-    });
+    this.setState({ isShuffled: !isShuffled });
   }
 
   handleLoadSkippedClick() {
@@ -138,36 +164,34 @@ class StudySession extends React.Component {
   }
 
   handleOnTap() {
-    this.setState({
-      isFlipped: !this.state.isFlipped
-    });
+    this.setState({ isFlipped: !this.state.isFlipped });
   }
 
   animateSwipe(isLeft) {
     const docWidth = document.body.clientWidth;
 
-    if (this.state.velocity > 1.5) {
-      this.setState({
-        isDragging: false,
-        nextOpacity: 1,
-        nextScale: 1,
-        currentRotation: isLeft ? -15 : 15,
-        moveLeft: isLeft ? -docWidth : docWidth
-      });
+    this.setState({
+      isDragging: false,
+      nextOpacity: 1,
+      nextScale: 1,
+      currentRotation: isLeft ? -15 : 15,
+      moveLeft: isLeft ? -docWidth : docWidth,
+      isAnimating: true
+    });
 
-      // wait for card to animate out of view before
-      // removing and resetting defaults for next card
-      setTimeout(() => {
-        this.props.removeSessionCard();
-        this.setState({
-          moveLeft: 0,
-          nextOpacity: 0,
-          nextScale: 0.8,
-          currentRotation: 0,
-          isFlipped: false
-        });
-      }, 500);
-    }
+    // wait for card to animate out of view before
+    // removing and resetting defaults for next card
+    setTimeout(() => {
+      this.props.removeSessionCard();
+      this.setState({
+        moveLeft: 0,
+        nextOpacity: 0,
+        nextScale: 0.8,
+        currentRotation: 0,
+        isFlipped: false,
+        isAnimating: false
+      });
+    }, 400);
   }
 
   render() {
@@ -189,6 +213,18 @@ class StudySession extends React.Component {
       </div>
     );
 
+    const leftSwipeButton = (
+      <button onClick={() => this.handleOnSwipedLeft(false)}>
+        <Icon icon="swipeButton" />
+      </button>
+    );
+
+    const rightSwipeButton = (
+      <button onClick={() => this.handleOnSwipedRight(false)}>
+        <Icon icon="swipeButton" />
+      </button>
+    );
+
     return (
       <React.Fragment>
         <StudyHeader
@@ -196,9 +232,12 @@ class StudySession extends React.Component {
           isShuffled={isShuffled}
           setId={this.props.match.params.id}
         />
-        <div className="study-card-container">
+        <div className="study-content-container">
+          <div className="left-swipe">
+            {sessionCards.length > 0 && leftSwipeButton}
+          </div>
           {/* wrapper has width/height explicitly set */}
-          <div className="wrapper">
+          <div className="study-card-wrapper">
             {sessionCards
               .map((card, index) => {
                 if (index === 0) {
@@ -208,8 +247,8 @@ class StudySession extends React.Component {
                       trackMouse
                       onSwiping={this.handleOnSwiping}
                       onSwiped={this.handleOnSwiped}
-                      onSwipedLeft={this.handleOnSwipedLeft}
-                      onSwipedRight={() => this.animateSwipe(false)}
+                      onSwipedLeft={() => this.handleOnSwipedLeft(true)}
+                      onSwipedRight={() => this.handleOnSwipedRight(true)}
                       onTap={this.handleOnTap}
                       ref={node => {
                         this.swipable = node;
@@ -240,13 +279,14 @@ class StudySession extends React.Component {
               .reverse()}
             {!sessionCards.length && !sessionLoading && reloadButtons}
           </div>
+          <div className="right-swipe">
+            {sessionCards.length > 0 && rightSwipeButton}
+          </div>
         </div>
       </React.Fragment>
     );
   }
 }
-
-// export default StudySession;
 
 const mapStateToProps = state => ({
   cards: state.data.cards,

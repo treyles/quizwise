@@ -107,6 +107,41 @@ export default class Icon extends React.Component {
             />
           </g>
         </svg>
+      ),
+
+      swipeButton: () => (
+        <svg
+          width="120px"
+          height="119px"
+          viewBox="0 0 120 119"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs />
+          <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+            <g fill="#4C5565">
+              <circle cx="59.5" cy="59.5" r="59.5" />
+            </g>
+            <g transform="translate(40.000000, 33.000000)" fill="#FFFFFF">
+              <rect
+                id="Rectangle-11"
+                transform="translate(15.495689, 14.995689) rotate(-45.000000) translate(-15.495689, -14.995689) "
+                x="-3.00431099"
+                y="12.495689"
+                width="37"
+                height="5"
+              />
+              <rect
+                id="Rectangle-11-Copy"
+                transform="translate(15.595689, 37.695689) rotate(-315.000000) translate(-15.595689, -37.695689) "
+                x="-2.90431098"
+                y="35.1956889"
+                width="37"
+                height="5"
+              />
+            </g>
+          </g>
+        </svg>
       )
     };
 

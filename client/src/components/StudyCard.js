@@ -56,8 +56,13 @@ class StudyCard extends Component {
           style={isNextCard ? nextCardStyle : currentCardStyle}
         >
           <div className={`content ${isFlipped ? 'flipped' : ''}`}>
-            <div className="front">{card.term}</div>
-            <div className="back">{card.definition}</div>
+            <div className="front">
+              <h2>{card.term}</h2>
+            </div>
+            <div className="back">
+              {card.definition.length < 440 && <h3>{card.definition}</h3>}
+              {card.definition.length > 440 && <h4>{card.definition}</h4>}
+            </div>
           </div>
         </div>
       </React.Fragment>

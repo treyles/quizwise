@@ -6,6 +6,7 @@
   height: 500px;
   border-radius: 10px;
   perspective: 150vw;
+  cursor: pointer;
   // transform: rotate(-2deg);
 
   .content {
@@ -24,18 +25,40 @@
   .front,
   .back {
     position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
     height: 100%;
     width: 100%;
     background: white;
     text-align: center;
     border-radius: 10px;
+    color: $primary-bg-dark;
+    padding: 40px;
     backface-visibility: hidden;
+    transform: translate3d(0, 0, 0);
     box-shadow: 4px 4px 20px 4px rgba(0, 0, 0, 0.05);
+
+    h2 {
+      position: relative;
+      letter-spacing: 0.16rem;
+      line-height: 1.75rem;
+
+      &:before {
+        content: 'TERM';
+        color: $placeholder-text;
+        font-size: 0.875rem;
+        letter-spacing: 1.87px;
+        position: absolute;
+        top: -80px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
   }
 
   .back {
-    // background: $dark-button;
-    // color: #fff;
     transform: rotateY(180deg);
   }
 

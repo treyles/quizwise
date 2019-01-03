@@ -1,13 +1,51 @@
-.study-card-container {
+.study-content-container {
   // width: 100vw;
   // height: 100vh;
+  // height: 100%;
   margin-top: 3vh;
   display: flex;
   justify-content: center;
   align-items: center;
   // background: peru;
 
-  .wrapper {
+  .left-swipe,
+  .right-swipe {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      background: none;
+      border: 0;
+      outline: 0;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    svg {
+      pointer-events: none;
+    }
+  }
+
+  .left-swipe {
+    button:hover {
+      transform: scale(1.07);
+    }
+  }
+
+  .right-swipe {
+    button:hover {
+      transform: scale(1.07);
+    }
+
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  .study-card-wrapper {
+    z-index: 999;
     position: relative;
     width: 440px;
     height: 500px;

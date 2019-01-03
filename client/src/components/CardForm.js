@@ -118,6 +118,7 @@ class CardForm extends React.Component {
             type="text"
             onChange={this.handleTermChange}
             placeholder="Type your term"
+            maxLength={140}
           />
           <div
             contentEditable
