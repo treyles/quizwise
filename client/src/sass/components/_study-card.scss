@@ -42,8 +42,8 @@
 
     h2 {
       position: relative;
-      letter-spacing: 0.16rem;
-      line-height: 1.75rem;
+      letter-spacing: 0.11rem;
+      line-height: 2.5rem;
 
       &:before {
         content: 'TERM';
@@ -60,6 +60,7 @@
 
   .back {
     transform: rotateY(180deg);
+    font-family: 'apercuregular', sans-serif;
   }
 
   // &:hover .content {

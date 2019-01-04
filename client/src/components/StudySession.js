@@ -115,20 +115,22 @@ class StudySession extends React.Component {
   }
 
   handleOnSwipedLeft(isSwiped) {
-    const { skippedCards } = this.state;
+    const { skippedCards, velocity, isAnimating } = this.state;
     const cardId = parseInt(
       this.swipable.element.firstChild.getAttribute('data-swiped')
     );
     const newCard = this.props.cards.filter(card => card.id === cardId);
 
-    if (this.state.velocity > 1.5 || !isSwiped) {
+    if ((velocity > 1.5 || !isSwiped) && !isAnimating) {
       this.setState({ skippedCards: skippedCards.concat(newCard) });
       this.animateSwipe(true);
     }
   }
 
   handleOnSwipedRight(isSwiped) {
-    if (this.state.velocity > 1.5 || !isSwiped) {
+    const { velocity, isAnimating } = this.state;
+
+    if ((velocity > 1.5 || !isSwiped) && !isAnimating) {
       this.animateSwipe(false);
     }
   }
@@ -196,6 +198,7 @@ class StudySession extends React.Component {
 
   render() {
     const {
+      skippedCards,
       isFlipped,
       isShuffled,
       moveLeft,
@@ -206,23 +209,62 @@ class StudySession extends React.Component {
     } = this.state;
     const { sessionCards, sessionLoading } = this.props;
 
+    // const swipeButtonStyle = {
+    //   pointerEvents: `${!sessionCards.length ? 'none' : 'auto'}`,
+    //   opacity: `${!sessionCards.length ? '.5' : '1'}`
+    // };
+
+    // TODO: one var name disableStyle, if using two places
+    const disableButtonStyle = {
+      pointerEvents: `${!skippedCards.length ? 'none' : 'auto'}`,
+      opacity: `${!skippedCards.length ? '.3' : '1'}`
+    };
+
+    const hasSkipped = skippedCards.length > 0;
+
     const reloadButtons = (
       <div className="reload-buttons">
-        <button onClick={this.handleLoadSkippedClick}>skipped</button>
-        <button onClick={this.handleReloadAllClick}>all</button>
+        <h2>You have studied all cards!</h2>
+        <h4>CHOOSE A STACK OF CARDS TO LOAD</h4>
+        <div className="button-wrapper">
+          <button
+            className="reload-skipped-button"
+            onClick={this.handleLoadSkippedClick}
+            style={disableButtonStyle}
+          >
+            SKIPPED CARDS
+          </button>
+
+          <button
+            className="reload-all-button"
+            onClick={this.handleReloadAllClick}
+          >
+            ALL CARDS
+          </button>
+        </div>
       </div>
     );
 
     const leftSwipeButton = (
-      <button onClick={() => this.handleOnSwipedLeft(false)}>
-        <Icon icon="swipeButton" />
-      </button>
+      <div className="left-swipe">
+        <button
+          onClick={() => this.handleOnSwipedLeft(false)}
+          // style={swipeButtonStyle}
+        >
+          <Icon icon="swipeButton" />
+        </button>
+      </div>
     );
 
     const rightSwipeButton = (
-      <button onClick={() => this.handleOnSwipedRight(false)}>
-        <Icon icon="swipeButton" />
-      </button>
+      <div className="right-swipe">
+        <button
+          onClick={() => this.handleOnSwipedRight(false)}
+          // style={swipeButtonStyle}
+        >
+          <Icon icon="swipeButton" />
+        </button>
+      </div>
     );
 
     return (
@@ -233,10 +275,7 @@ class StudySession extends React.Component {
           setId={this.props.match.params.id}
         />
         <div className="study-content-container">
-          <div className="left-swipe">
-            {sessionCards.length > 0 && leftSwipeButton}
-          </div>
-          {/* wrapper has width/height explicitly set */}
+          {sessionCards.length > 0 && leftSwipeButton}
           <div className="study-card-wrapper">
             {sessionCards
               .map((card, index) => {
@@ -279,9 +318,7 @@ class StudySession extends React.Component {
               .reverse()}
             {!sessionCards.length && !sessionLoading && reloadButtons}
           </div>
-          <div className="right-swipe">
-            {sessionCards.length > 0 && rightSwipeButton}
-          </div>
+          {sessionCards.length > 0 && rightSwipeButton}
         </div>
       </React.Fragment>
     );

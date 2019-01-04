@@ -36,6 +36,11 @@ class StudyHeader extends Component {
       width: `${Math.trunc(sessionCards.length / cards.length * 100)}%`
     };
 
+    const shuffleButtonStyle = {
+      pointerEvents: `${!sessionCards.length ? 'none' : 'auto'}`,
+      opacity: `${!sessionCards.length ? '.5' : '1'}`
+    };
+
     return (
       <header className="study-header">
         <div className="progress-bar" style={progressBarStyle} />
@@ -54,7 +59,10 @@ class StudyHeader extends Component {
           {/* <h4>{Math.trunc(sessionCards.length / cards.length * 100)}</h4> */}
         </div>
         <div className="shuffle">
-          <button onClick={() => handleShuffleClick()}>
+          <button
+            onClick={() => handleShuffleClick()}
+            style={shuffleButtonStyle}
+          >
             <h5>{isShuffled ? 'ORDER' : 'SHUFFLE'}</h5>
           </button>
         </div>
