@@ -14,22 +14,27 @@
     display: flex;
     align-items: center;
     position: relative;
-    width: 60%;
+    width: 100%;
     max-width: 930px;
     height: 253px;
     background: #fff;
     padding: 40px;
     padding-bottom: 80px;
-    // border-radius: 4px;
+
+    @include desktop {
+      width: 60%;
+    }
 
     .delete-button {
       position: absolute;
+      background: transparent;
       top: 18px;
       right: 18px;
       border: 0;
       padding: 0;
       transition: 0.2s ease;
       outline: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       cursor: pointer;
 
       svg {
@@ -66,10 +71,8 @@
       left: 0;
       bottom: 0;
       width: 100%;
-      // padding: 27px 0;
       background: $primary-bg-dark;
       height: 69px;
-      // border-radius: 0 0 4px 4px;
       border: 0;
       outline: none;
       cursor: pointer;

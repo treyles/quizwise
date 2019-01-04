@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from 'react';
 // import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -19,7 +21,7 @@ class Collection extends React.Component {
   }
 
   render() {
-    const { cards, cardsLoading } = this.props;
+    const { cards, cardsLoading, currentSet } = this.props;
 
     const placeholder = [...Array(3)].map((_, index) => (
       <div key={index} className="placeholder" />
@@ -50,15 +52,22 @@ class Collection extends React.Component {
             {/* {cards.length > 1 && (
               <button className="session-button">STUDY SESSION</button>
             )} */}
-            <button
-              className={
-                cards.length > 1
-                  ? 'session-button'
-                  : 'session-button disable'
-              }
+            <Link
+              to={{
+                pathname: `/study/${currentSet}`,
+                state: { id: currentSet }
+              }}
             >
-              STUDY SESSION
-            </button>
+              <button
+                className={
+                  cards.length > 1
+                    ? 'session-button'
+                    : 'session-button disable'
+                }
+              >
+                STUDY SESSION
+              </button>
+            </Link>
             <Link to="/form">
               <button className="add-button">
                 <Icon icon="addTerm" />
@@ -82,7 +91,8 @@ class Collection extends React.Component {
 
 const mapStateToProps = state => ({
   cards: state.data.cards,
-  cardsLoading: state.data.cardsLoading
+  cardsLoading: state.data.cardsLoading,
+  currentSet: state.data.currentSet
 });
 
 export default connect(mapStateToProps, { fetchCollection })(Collection);

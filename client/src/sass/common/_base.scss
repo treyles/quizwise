@@ -6,19 +6,12 @@ $placeholder-text: #8f9fb2;
 $start-button: #72b4a6;
 $dark-button: #4c5565;
 
-// text colors
-// $text-light: #fcf5ed;
-
 body {
   font-family: 'apercumedium', sans-serif;
   background-color: $primary-bg-dark;
   padding: 0;
   margin: 0;
 }
-
-// html {
-//   font-size: 10px;
-// }
 
 @font-face {
   font-family: 'apercubold';
@@ -100,47 +93,11 @@ h5 {
   }
   to {
     opacity: 1;
-    // background: lighten(#5f6776, 2%);
   }
 }
 
-.empty-message {
-  z-index: 9999;
-  position: absolute;
-  left: 50%;
-  top: 40%;
-  transform: translateX(-50%) translateY(-40%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-
-  h2 {
-    color: #fff;
-    font-size: 1.5625rem;
-    margin-bottom: 1.25rem;
-    letter-spacing: 0.06rem;
-  }
-
-  h4 {
-    color: #929bac;
-    font-size: 13px;
-    letter-spacing: 0.08rem;
+@mixin desktop {
+  @media only screen and (min-width: 768px) {
+    @content;
   }
 }
-
-// add to new component
-
-// .swipe-enter {
-//   left: 0;
-// }
-// .swipe-enter-active {
-//   left: 0;
-// }
-// .swipe-exit {
-//   left: 0;
-// }
-// .swipe-exit-active {
-//   left: -500px;
-//   transition: 0.3s ease;
-// }

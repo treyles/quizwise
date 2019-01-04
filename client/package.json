@@ -4,14 +4,13 @@
   "main": "./src/index.js",
   "author": "treyles",
   "license": "MIT",
-  "browserslist": [
-    "last 2 versions",
-    "ie > 10"
-  ],
+  "browserslist": ["last 2 versions", "ie > 10"],
   "scripts": {
     "build": "webpack",
     "dev": "webpack-dev-server",
-    "format": "prettier --write --single-quote --parser=flow --tab-width=2 \"src/**/*.{js,jsx}\"",
+    "mobile": "webpack-dev-server --host 0.0.0.0",
+    "format":
+      "prettier --write --single-quote --parser=flow --tab-width=2 \"src/**/*.{js,jsx}\"",
     "lint": "eslint **/*.{js,jsx} --quiet"
   },
   "dependencies": {

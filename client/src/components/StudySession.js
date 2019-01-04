@@ -220,11 +220,9 @@ class StudySession extends React.Component {
       opacity: `${!skippedCards.length ? '.3' : '1'}`
     };
 
-    const hasSkipped = skippedCards.length > 0;
-
     const reloadButtons = (
       <div className="reload-buttons">
-        <h2>You have studied all cards!</h2>
+        <h2>You have studied all cards in this set!</h2>
         <h4>CHOOSE A STACK OF CARDS TO LOAD</h4>
         <div className="button-wrapper">
           <button
