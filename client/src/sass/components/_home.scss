@@ -55,8 +55,10 @@
         margin-right: 6px;
       }
 
-      &:hover {
-        background: darken($dark-button, 10%);
+      @include desktop {
+        &:hover {
+          background: darken($dark-button, 10%);
+        }
       }
     }
 

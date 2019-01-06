@@ -1,20 +1,24 @@
 .collection-card {
   display: flex;
   position: relative;
-  // align-items: center;
-  // flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   min-height: 60px;
-  // height: 200px;
   text-align: center;
   margin-bottom: 21px;
-  padding: 40px 0;
+  padding: 40px 50px;
   background: #fff;
-  // border-radius: 0.25rem;
   border-radius: 0 0 0.25rem 0.25rem;
   border-top: 6px solid #8d9ab2;
   cursor: pointer;
   transition: 0.3s ease;
+
+  @include desktop {
+    flex-direction: row;
+    // align-items: center;
+    padding: 40px 0;
+  }
 
   .card-count,
   .card-term,
@@ -27,28 +31,50 @@
   .card-count {
     flex-shrink: 0;
     min-height: inherit;
-    width: 5.375rem;
     font-size: 2rem;
     color: #cfd2d5;
+
+    @include desktop {
+      width: 5.375rem;
+    }
   }
 
   .card-term {
     flex-shrink: 0;
     min-height: inherit;
-    width: 16.25rem;
-    padding: 0 2.375rem 0 0.625rem;
+    padding-bottom: 2rem;
     color: $primary-bg-dark;
+
+    @include desktop {
+      width: 16.25rem;
+      padding: 0 2.375rem 0 0.625rem;
+    }
   }
 
   .card-description {
     font-family: 'apercuregular', sans-serif;
     color: #7f8b9b;
-    justify-content: flex-start;
-    padding: 0 4.625rem 0 2.375rem;
+    justify-content: center;
+    padding: 2rem 0 1.5rem 0;
     text-align: left;
     min-height: inherit;
     width: 100%;
-    border-left: 1px solid #dedede;
+    border-top: 1px solid #eee;
+
+    @include desktop {
+      justify-content: flex-start;
+      padding: 0 4.625rem 0 2.375rem;
+      border-left: 1px solid #eee;
+      border-top: 0;
+    }
+
+    h4 {
+      text-align: center;
+
+      @include desktop {
+        text-align: left;
+      }
+    }
   }
 
   .delete-button {

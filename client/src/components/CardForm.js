@@ -22,6 +22,7 @@ class CardForm extends React.Component {
     this.handleSaveClick = this.handleSaveClick.bind(this);
     this.handleEscape = this.handleEscape.bind(this);
     this.handleCancelClick = this.handleCancelClick.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
   }
 
   componentWillMount() {
@@ -38,7 +39,7 @@ class CardForm extends React.Component {
       this.setState({ term, definition });
 
       // manually set contenteditable div with definition
-      this.node.innerText = definition;
+      this.defInput.innerText = definition;
     }
   }
 
@@ -68,6 +69,11 @@ class CardForm extends React.Component {
     this.setState({
       definition: e.target.innerText
     });
+  }
+
+  handleFocus() {
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0;
   }
 
   handleSaveClick() {
@@ -114,6 +120,7 @@ class CardForm extends React.Component {
         </header>
         <section className="form-section">
           <input
+            onFocus={this.handleFocus}
             value={this.state.term}
             type="text"
             onChange={this.handleTermChange}
@@ -122,9 +129,10 @@ class CardForm extends React.Component {
           />
           <div
             contentEditable
-            ref={node => (this.node = node)}
+            onFocus={this.handleFocus}
             placeholder="Type or paste your defintion here"
             onInput={this.handleDefinitionInput}
+            ref={node => (this.defInput = node)}
           />
         </section>
       </div>
