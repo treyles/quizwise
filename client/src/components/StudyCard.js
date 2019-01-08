@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 // import FlipCard from 'react-flipcard';
 import Flippy, { FrontSide, BackSide } from 'react-flippy';
+import { Textfit } from 'react-textfit';
+import ScaleText from 'react-scale-text';
 
 class StudyCard extends Component {
   constructor(props) {
@@ -13,16 +15,18 @@ class StudyCard extends Component {
     // this.handleFlipClick = this.handleFlipClick.bind(this);
   }
 
-  // handleFlipClick() {
-  //   console.log('what');
-  //   this.setState({
-  //     isFlipped: !this.state.isFlipped
-  //   });
-  // }
+  resizeText(text) {
+    const length = text.length;
 
-  // componentWillUnmount() {
-  //   console.log('removed', this.props.card);
-  // }
+    let size;
+    if (length < 400) size = 19;
+    if (length > 400 && length < 600) size = 16;
+    if (length > 600 && length < 800) size = 14;
+    if (length > 800) size = 12;
+
+    return <p style={{ fontSize: `${size}px` }}>{text}</p>;
+  }
+
   render() {
     const {
       removed,
@@ -59,10 +63,7 @@ class StudyCard extends Component {
             <div className="front">
               <h2>{card.term}</h2>
             </div>
-            <div className="back">
-              {card.definition.length < 440 && <h3>{card.definition}</h3>}
-              {card.definition.length > 440 && <h4>{card.definition}</h4>}
-            </div>
+            <div className="back">{this.resizeText(card.definition)}</div>
           </div>
         </div>
       </React.Fragment>

@@ -1,16 +1,16 @@
 .study-header {
+  flex-shrink: 0;
   z-index: 999;
-  // position: fixed;
   width: 100%;
   display: flex;
-  // justify-content: space-between;
-  // align-items: flex-end;
   align-items: center;
-  height: 134px;
-  // background: $primary-bg-dark;
+  height: 90px;
   background: transparent;
   padding: 0 2.1875rem;
-  // box-shadow: 0px 5px 50px 0px rgba(90, 99, 115, 0.5);
+
+  @include desktop {
+    height: 134px;
+  }
 
   a {
     text-decoration: none;
@@ -39,6 +39,9 @@
     justify-content: flex-start;
 
     .back-container {
+      // position: absolute;
+      // top: 1.25rem;
+      // left: 1.25rem;
       display: flex;
       align-items: center;
       height: 4.3125rem;
@@ -46,6 +49,20 @@
       letter-spacing: 0.1rem;
       color: #fff;
       cursor: pointer;
+
+      // @include desktop {
+      //   position: static;
+      //   display: flex;
+      //   align-items: center;
+      // }
+
+      h5 {
+        display: none;
+
+        @include desktop {
+          display: block;
+        }
+      }
 
       svg {
         margin-right: 0.8125rem;
@@ -82,7 +99,6 @@
       width: 102px;
       height: 36px;
       border-radius: 4px;
-      // border-radius: 500px;
       letter-spacing: 0.1rem;
       background: $dark-button;
       cursor: pointer;

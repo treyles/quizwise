@@ -50,16 +50,32 @@ class StudySession extends React.Component {
     const routerState = this.props.location.state;
     this.props.fetchSession(routerState.id);
 
-    document.body.style.overflow = 'hidden';
+    // disables bounce effect on ios (makes swiping cards easier)
+    document.body.addEventListener('touchmove', this.handleDisableScroll, {
+      passive: false
+    });
+
     document.addEventListener('keydown', this.handleKeyPress);
+
+    // TODO: unused, delete?
     this.clientWidth = document.body.clientWidth;
     this.clientHeight = document.body.clientHeight;
   }
 
   componentWillUnmount() {
-    document.body.style.overflow = 'auto';
+    document.body.removeEventListener(
+      'touchmove',
+      this.handleDisableScroll,
+      { passive: false }
+    );
+
     document.removeEventListener('keydown', this.handleKeyPress);
+
     this.props.clearSession();
+  }
+
+  handleDisableScroll(e) {
+    e.preventDefault();
   }
 
   handleKeyPress(e) {
@@ -121,7 +137,7 @@ class StudySession extends React.Component {
     );
     const newCard = this.props.cards.filter(card => card.id === cardId);
 
-    if ((velocity > 1.5 || !isSwiped) && !isAnimating) {
+    if ((velocity > 1 || !isSwiped) && !isAnimating) {
       this.setState({ skippedCards: skippedCards.concat(newCard) });
       this.animateSwipe(true);
     }
@@ -130,7 +146,7 @@ class StudySession extends React.Component {
   handleOnSwipedRight(isSwiped) {
     const { velocity, isAnimating } = this.state;
 
-    if ((velocity > 1.5 || !isSwiped) && !isAnimating) {
+    if ((velocity > 1 || !isSwiped) && !isAnimating) {
       this.animateSwipe(false);
     }
   }
@@ -165,12 +181,15 @@ class StudySession extends React.Component {
     });
   }
 
-  handleOnTap() {
+  handleOnTap(e) {
+    // stops default double click on mobile
+    e.stopImmediatePropagation();
     this.setState({ isFlipped: !this.state.isFlipped });
   }
 
   animateSwipe(isLeft) {
-    const docWidth = document.body.clientWidth;
+    const clientWidth = document.body.clientWidth;
+    const docWidth = clientWidth < 768 ? clientWidth * 2 : clientWidth;
 
     this.setState({
       isDragging: false,
@@ -208,6 +227,21 @@ class StudySession extends React.Component {
       currentRotation
     } = this.state;
     const { sessionCards, sessionLoading } = this.props;
+
+    // not ideal, but keeps safari ios toolbar from hidding bottom of card
+    // const isSafariIOS = /^(iPhone)/.test(navigator.platform);
+    // const desktopWidth = document.body.clientWidth;
+    // https://stackoverflow.com/questions/3007480/determine-if-user-navigated-from-mobile-safari/29696509#29696509
+
+    // const deskDocWidth = document.body.clientWidth > 768;
+
+    const ua = window.navigator.userAgent;
+    const iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
+    const webkit = !!ua.match(/WebKit/i);
+    const isSafariIOS = iOS && webkit && !ua.match(/CriOS/i);
+    const containerSyle = {
+      height: isSafariIOS || this.clientWidth > 768 ? '90vh' : '100vh'
+    };
 
     // const swipeButtonStyle = {
     //   pointerEvents: `${!sessionCards.length ? 'none' : 'auto'}`,
@@ -266,7 +300,8 @@ class StudySession extends React.Component {
     );
 
     return (
-      <React.Fragment>
+      <div className="study" style={containerSyle}>
+        {/* <div className="study"> */}
         <StudyHeader
           handleShuffleClick={this.handleShuffleClick}
           isShuffled={isShuffled}
@@ -318,7 +353,7 @@ class StudySession extends React.Component {
           </div>
           {sessionCards.length > 0 && rightSwipeButton}
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }

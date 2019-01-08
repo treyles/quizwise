@@ -4,13 +4,15 @@
   "main": "./src/index.js",
   "author": "treyles",
   "license": "MIT",
-  "browserslist": ["last 2 versions", "ie > 10"],
+  "browserslist": [
+    "last 2 versions",
+    "ie > 10"
+  ],
   "scripts": {
     "build": "webpack",
     "dev": "webpack-dev-server",
     "mobile": "webpack-dev-server --host 0.0.0.0",
-    "format":
-      "prettier --write --single-quote --parser=flow --tab-width=2 \"src/**/*.{js,jsx}\"",
+    "format": "prettier --write --single-quote --parser=flow --tab-width=2 \"src/**/*.{js,jsx}\"",
     "lint": "eslint **/*.{js,jsx} --quiet"
   },
   "dependencies": {
@@ -44,8 +46,10 @@
     "react-flippy": "^0.1.2",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
+    "react-scale-text": "^1.2.2",
     "react-spring": "^7.2.7",
     "react-swipeable": "^4.3.1",
+    "react-textfit": "^1.1.0",
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.7",
     "redux-thunk": "^2.3.0",
