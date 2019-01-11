@@ -1,20 +1,13 @@
-/* eslint-disable */
-
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CollectionCard from './CollectionCard';
-import CardForm from './CardForm';
 import Icon from '../utils/Icon';
 
 import { fetchCollection } from '../actions/';
 
 class Collection extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-
   componentDidMount() {
     const routerState = this.props.location.state;
     this.props.fetchCollection(routerState.id);
@@ -29,7 +22,7 @@ class Collection extends React.Component {
 
     const emptyMessage = (
       <div className="empty-message">
-        <h2>{"You don't have any cards in this set"}</h2>
+        <h2>No cards in this set</h2>
         <h4>CREATE 2 TERMS TO START STUDYING</h4>
       </div>
     );
@@ -49,9 +42,6 @@ class Collection extends React.Component {
             <span className="term-count">
               <h5>{cards.length} TERMS</h5>
             </span>
-            {/* {cards.length > 1 && (
-              <button className="session-button">STUDY SESSION</button>
-            )} */}
             <Link
               to={{
                 pathname: `/study/${currentSet}`,
@@ -88,6 +78,18 @@ class Collection extends React.Component {
     );
   }
 }
+
+Collection.defaultProps = {
+  currentSet: null
+};
+
+Collection.propTypes = {
+  location: PropTypes.object.isRequired, // eslint-disable-line
+  cards: PropTypes.arrayOf(PropTypes.object).isRequired,
+  cardsLoading: PropTypes.bool.isRequired,
+  fetchCollection: PropTypes.func.isRequired,
+  currentSet: PropTypes.number
+};
 
 const mapStateToProps = state => ({
   cards: state.data.cards,

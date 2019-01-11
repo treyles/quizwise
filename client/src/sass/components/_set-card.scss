@@ -1,4 +1,5 @@
 .set-card {
+  flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -63,7 +64,6 @@
   .hint {
     position: absolute;
     bottom: 30px;
-    // width: 100%;
     left: 50%;
     transform: translateX(-50%);
     letter-spacing: 0.05rem;
@@ -71,7 +71,6 @@
     color: $placeholder-text;
   }
 
-  // TODO: need to set dynamic dimensions (check iphone 5s)
   .decoration {
     position: absolute;
     display: flex;

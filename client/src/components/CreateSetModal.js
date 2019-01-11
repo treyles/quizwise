@@ -1,5 +1,5 @@
-/* eslint-disable */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Icon from '../utils/Icon';
@@ -54,7 +54,7 @@ class CreateSetModal extends Component {
   }
 
   handleClickSave() {
-    const { fetchSets, closeModal } = this.props;
+    const { closeModal } = this.props;
     const { name } = this.state;
 
     // check if at least one character that is not whitespace
@@ -103,10 +103,8 @@ class CreateSetModal extends Component {
   }
 }
 
-// export default CreateSetModal;
-
-// const mapStateToProps = state => ({
-//   sets: state.data.sets
-// });
+CreateSetModal.propTypes = {
+  closeModal: PropTypes.func.isRequired
+};
 
 export default connect(null, { fetchSets })(CreateSetModal);

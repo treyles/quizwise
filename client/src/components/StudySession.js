@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -7,6 +6,7 @@ import Swipeable from 'react-swipeable';
 import StudyCard from '../components/StudyCard';
 import StudyHeader from '../components/StudyHeader';
 import Icon from '../utils/Icon';
+import { isSafariIOS } from '../utils/helpers';
 
 import {
   fetchCollection,
@@ -20,6 +20,10 @@ import {
 } from '../actions';
 
 class StudySession extends React.Component {
+  static handleDisableScroll(e) {
+    e.preventDefault();
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -56,10 +60,6 @@ class StudySession extends React.Component {
     });
 
     document.addEventListener('keydown', this.handleKeyPress);
-
-    // TODO: unused, delete?
-    this.clientWidth = document.body.clientWidth;
-    this.clientHeight = document.body.clientHeight;
   }
 
   componentWillUnmount() {
@@ -72,10 +72,6 @@ class StudySession extends React.Component {
     document.removeEventListener('keydown', this.handleKeyPress);
 
     this.props.clearSession();
-  }
-
-  handleDisableScroll(e) {
-    e.preventDefault();
   }
 
   handleKeyPress(e) {
@@ -95,26 +91,27 @@ class StudySession extends React.Component {
     }
   }
 
-  handleOnSwiping(e, deltaX, deltaY) {
+  handleOnSwiping(e, deltaX) {
     const cardWidth = this.swipable.element.clientWidth;
     const maxMove = cardWidth / 2;
     const animationValue = Math.abs(deltaX) / maxMove;
 
-    const finalValue = animationValue > 1 ? 1 : animationValue;
+    // calculate opacity
+    const opacityValue = animationValue > 1 ? 1 : animationValue;
 
     // calculate scale
-    const scaleValue = 0.2 * animationValue + 0.8;
-    const finalScale = scaleValue > 1 ? 1 : scaleValue;
+    const scale = 0.2 * animationValue + 0.8;
+    const scaleValue = scale > 1 ? 1 : scale;
 
     // calculate rotation
-    const rotationValue = animationValue * 3;
-    const rotationDirection = deltaX < 0 ? rotationValue : -rotationValue;
+    const rotation = animationValue * 3;
+    const rotationDirection = deltaX < 0 ? rotation : -rotation;
 
     this.setState({
       isDragging: true,
       moveLeft: -deltaX,
-      nextOpacity: finalValue,
-      nextScale: finalScale,
+      nextOpacity: opacityValue,
+      nextScale: scaleValue,
       currentRotation: rotationDirection
     });
   }
@@ -123,17 +120,18 @@ class StudySession extends React.Component {
     this.setState({
       isDragging: false,
       moveLeft: 0,
-      velocity: velocity,
       nextOpacity: 0,
       nextScale: 0.8,
-      currentRotation: 0
+      currentRotation: 0,
+      velocity
     });
   }
 
   handleOnSwipedLeft(isSwiped) {
     const { skippedCards, velocity, isAnimating } = this.state;
     const cardId = parseInt(
-      this.swipable.element.firstChild.getAttribute('data-swiped')
+      this.swipable.element.firstChild.getAttribute('data-swiped'),
+      10
     );
     const newCard = this.props.cards.filter(card => card.id === cardId);
 
@@ -188,7 +186,7 @@ class StudySession extends React.Component {
   }
 
   animateSwipe(isLeft) {
-    const clientWidth = document.body.clientWidth;
+    const { clientWidth } = document.body;
     const docWidth = clientWidth < 768 ? clientWidth * 2 : clientWidth;
 
     this.setState({
@@ -228,27 +226,10 @@ class StudySession extends React.Component {
     } = this.state;
     const { sessionCards, sessionLoading } = this.props;
 
-    // not ideal, but keeps safari ios toolbar from hidding bottom of card
-    // const isSafariIOS = /^(iPhone)/.test(navigator.platform);
-    // const desktopWidth = document.body.clientWidth;
-    // https://stackoverflow.com/questions/3007480/determine-if-user-navigated-from-mobile-safari/29696509#29696509
-
-    // const deskDocWidth = document.body.clientWidth > 768;
-
-    const ua = window.navigator.userAgent;
-    const iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
-    const webkit = !!ua.match(/WebKit/i);
-    const isSafariIOS = iOS && webkit && !ua.match(/CriOS/i);
     const containerSyle = {
-      height: isSafariIOS || this.clientWidth > 768 ? '90vh' : '100vh'
+      height: isSafariIOS() ? '90vh' : '100vh'
     };
 
-    // const swipeButtonStyle = {
-    //   pointerEvents: `${!sessionCards.length ? 'none' : 'auto'}`,
-    //   opacity: `${!sessionCards.length ? '.5' : '1'}`
-    // };
-
-    // TODO: one var name disableStyle, if using two places
     const disableButtonStyle = {
       pointerEvents: `${!skippedCards.length ? 'none' : 'auto'}`,
       opacity: `${!skippedCards.length ? '.3' : '1'}`
@@ -264,14 +245,13 @@ class StudySession extends React.Component {
             onClick={this.handleLoadSkippedClick}
             style={disableButtonStyle}
           >
-            SKIPPED CARDS
+            {skippedCards.length ? `SKIPPED CARDS` : 'NONE SKIPPED'}
           </button>
-
           <button
             className="reload-all-button"
             onClick={this.handleReloadAllClick}
           >
-            ALL CARDS
+            RESTART
           </button>
         </div>
       </div>
@@ -279,10 +259,7 @@ class StudySession extends React.Component {
 
     const leftSwipeButton = (
       <div className="left-swipe">
-        <button
-          onClick={() => this.handleOnSwipedLeft(false)}
-          // style={swipeButtonStyle}
-        >
+        <button onClick={() => this.handleOnSwipedLeft(false)}>
           <Icon icon="swipeButton" />
         </button>
       </div>
@@ -290,21 +267,20 @@ class StudySession extends React.Component {
 
     const rightSwipeButton = (
       <div className="right-swipe">
-        <button
-          onClick={() => this.handleOnSwipedRight(false)}
-          // style={swipeButtonStyle}
-        >
+        <button onClick={() => this.handleOnSwipedRight(false)}>
           <Icon icon="swipeButton" />
         </button>
       </div>
     );
 
+    const placeholder = <div className="placeholder" />;
+
     return (
       <div className="study" style={containerSyle}>
-        {/* <div className="study"> */}
         <StudyHeader
           handleShuffleClick={this.handleShuffleClick}
           isShuffled={isShuffled}
+          // id from url via react router
           setId={this.props.match.params.id}
         />
         <div className="study-content-container">
@@ -347,8 +323,11 @@ class StudySession extends React.Component {
                     />
                   );
                 }
+                // only render first/second card in array
+                return null;
               })
               .reverse()}
+            {sessionLoading && placeholder}
             {!sessionCards.length && !sessionLoading && reloadButtons}
           </div>
           {sessionCards.length > 0 && rightSwipeButton}
@@ -358,11 +337,25 @@ class StudySession extends React.Component {
   }
 }
 
+StudySession.propTypes = {
+  location: PropTypes.object.isRequired, // eslint-disable-line
+  match: PropTypes.object.isRequired, // eslint-disable-line
+  cards: PropTypes.arrayOf(PropTypes.object).isRequired,
+  sessionCards: PropTypes.arrayOf(PropTypes.object).isRequired,
+  sessionLoading: PropTypes.bool.isRequired,
+  fetchSession: PropTypes.func.isRequired,
+  clearSession: PropTypes.func.isRequired,
+  orderSessionCards: PropTypes.func.isRequired,
+  shuffleSessionCards: PropTypes.func.isRequired,
+  loadSkippedCards: PropTypes.func.isRequired,
+  reloadSessionCards: PropTypes.func.isRequired,
+  removeSessionCard: PropTypes.func.isRequired
+};
+
 const mapStateToProps = state => ({
   cards: state.data.cards,
   sessionCards: state.data.sessionCards,
   sessionLoading: state.data.sessionLoading
-  // setsLoading: state.data.setsLoading
 });
 
 export default withRouter(

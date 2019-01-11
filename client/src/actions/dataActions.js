@@ -18,7 +18,6 @@ import {
 } from './types';
 
 export const fetchSets = () => dispatch => {
-  // setTimeout(() => {
   axios
     .get('/api/sets')
     .then(res => {
@@ -28,7 +27,6 @@ export const fetchSets = () => dispatch => {
       });
     })
     .catch(err => console.error(err));
-  // }, 1000);
 };
 
 export const fetchCollection = id => dispatch => {

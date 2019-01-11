@@ -53,25 +53,17 @@ export default function data(state = initialState, action) {
         cards: action.cards,
         setName: action.setName,
         sessionLoading: false
-        // currentSet: action.currentSet
-        // cardsLoading: true
       };
     case REMOVE_SESSION_CARD:
       return {
         ...state,
         sessionCards: action.sessionCards
-        // cards: action.cards
-        // currentSet: null,
-        // cardsLoading: true
       };
 
     case LOAD_SKIPPED_CARDS:
       return {
         ...state,
         sessionCards: action.sessionCards
-        // cards: action.cards
-        // currentSet: null,
-        // cardsLoading: true
       };
 
     case RELOAD_SESSION_CARDS:

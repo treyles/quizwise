@@ -16,7 +16,6 @@
 
   @include desktop {
     flex-direction: row;
-    // align-items: center;
     padding: 40px 0;
   }
 
@@ -83,6 +82,7 @@
     right: 18px;
     border: 0;
     padding: 0;
+    background: transparent;
     transition: 0.2s ease;
     outline: none;
     cursor: pointer;

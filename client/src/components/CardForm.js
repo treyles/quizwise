@@ -1,15 +1,15 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
-// import Icon from '../utils/Icon';
-
-// import { deleteCard } from '../actions/';
 
 class CardForm extends React.Component {
+  static handleFocus() {
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0;
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -21,8 +21,7 @@ class CardForm extends React.Component {
     this.handleDefinitionInput = this.handleDefinitionInput.bind(this);
     this.handleSaveClick = this.handleSaveClick.bind(this);
     this.handleEscape = this.handleEscape.bind(this);
-    this.handleCancelClick = this.handleCancelClick.bind(this);
-    this.handleFocus = this.handleFocus.bind(this);
+    this.handleGoBack = this.handleGoBack.bind(this);
   }
 
   componentWillMount() {
@@ -48,14 +47,13 @@ class CardForm extends React.Component {
     document.removeEventListener('keydown', this.handleEscape);
   }
 
-  // TODO: rename to goBack? — save uses this function, not just cancel
-  handleCancelClick() {
+  handleGoBack() {
     this.props.history.goBack();
   }
 
   handleEscape(e) {
     if (e.key === 'Escape') {
-      this.handleCancelClick();
+      this.handleGoBack();
     }
   }
 
@@ -71,11 +69,6 @@ class CardForm extends React.Component {
     });
   }
 
-  handleFocus() {
-    window.scrollTo(0, 0);
-    document.body.scrollTop = 0;
-  }
-
   handleSaveClick() {
     const { currentSet } = this.props;
     const { term, definition } = this.state;
@@ -83,21 +76,16 @@ class CardForm extends React.Component {
 
     if (routerState) {
       const { id } = routerState.data;
-
       axios
         .put(`/api/cards/${id}`, { term, definition })
-        .then(res => {
-          this.handleCancelClick();
-        })
+        .then(() => this.handleGoBack())
         .catch(err => console.error(err));
     } else {
       axios
         .post('/api/cards', { term, definition, currentSet })
-        .then(res => {
-          // update number of terms for set card ui
-          return axios.put(`/api/sets/${currentSet}`);
-        })
-        .then(() => this.handleCancelClick())
+        // update number of terms for set card ui
+        .then(() => axios.put(`/api/sets/${currentSet}`))
+        .then(() => this.handleGoBack())
         .catch(err => console.error(err));
     }
   }
@@ -106,14 +94,9 @@ class CardForm extends React.Component {
     return (
       <div className="card-form">
         <header className="form-header">
-          {/* <Link to="/collection"> */}
-          <button
-            className="cancel-button"
-            onClick={this.handleCancelClick}
-          >
+          <button className="cancel-button" onClick={this.handleGoBack}>
             CANCEL
           </button>
-          {/* </Link> */}
           <button className="save-button" onClick={this.handleSaveClick}>
             SAVE TERM
           </button>
@@ -132,7 +115,9 @@ class CardForm extends React.Component {
             onFocus={this.handleFocus}
             placeholder="Type or paste your defintion here"
             onInput={this.handleDefinitionInput}
-            ref={node => (this.defInput = node)}
+            ref={node => {
+              this.defInput = node;
+            }}
           />
         </section>
       </div>
@@ -140,9 +125,15 @@ class CardForm extends React.Component {
   }
 }
 
-// CardForm.propTypes = {
-//   // PropTypes
-// };
+CardForm.defaultProps = {
+  currentSet: null
+};
+
+CardForm.propTypes = {
+  history: PropTypes.object, // eslint-disable-line
+  location: PropTypes.object, // eslint-disable-line
+  currentSet: PropTypes.number
+};
 
 const mapStateToProps = state => ({
   currentSet: state.data.currentSet

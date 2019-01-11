@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import SetCard from './SetCard';
 import CreateSetModal from './CreateSetModal';
@@ -74,7 +72,12 @@ class Home extends React.Component {
   }
 }
 
-// export default Home;
+Home.propTypes = {
+  sets: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetchSets: PropTypes.func.isRequired,
+  clearCollection: PropTypes.func.isRequired,
+  setsLoading: PropTypes.bool.isRequired
+};
 
 const mapStateToProps = state => ({
   sets: state.data.sets,

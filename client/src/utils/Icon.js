@@ -142,6 +142,43 @@ export default class Icon extends React.Component {
             </g>
           </g>
         </svg>
+      ),
+
+      shuffle: () => (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          version="1.1"
+          x="0px"
+          y="0px"
+          viewBox="0 0 29 29"
+          xmlSpace="preserve"
+        >
+          <style type="text/css" />
+          <g>
+            <path
+              fill="none"
+              stroke="#fff"
+              strokeWidth="2"
+              strokeMiterlimit="10"
+              d="M23.5,10h-4.343c-1.061,0-2.078,0.421-2.828,1.172l-6.657,6.657C8.921,18.579,7.904,19,6.843,19H2.5"
+            />
+            <path
+              fill="none"
+              stroke="#fff"
+              strokeWidth="2"
+              strokeMiterlimit="10"
+              d="M2.5,10h4.343c1.061,0,2.078,0.421,2.828,1.172l6.657,6.657c0.75,0.75,1.768,1.172,2.828,1.172H23.5"
+            />
+            <path
+              fill="#fff"
+              d="M21.5,12.412V7.588c0-0.368,0.401-0.596,0.717-0.408l4.052,2.412c0.309,0.184,0.309,0.631,0,0.815l-4.052,2.412   C21.901,13.007,21.5,12.78,21.5,12.412z"
+            />
+            <path
+              fill="#fff"
+              d="M21.5,21.412v-4.823c0-0.368,0.401-0.596,0.717-0.408l4.052,2.412c0.309,0.184,0.309,0.631,0,0.815l-4.052,2.412   C21.901,22.007,21.5,21.78,21.5,21.412z"
+            />
+          </g>
+        </svg>
       )
     };
 

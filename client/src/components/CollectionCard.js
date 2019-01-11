@@ -1,8 +1,6 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Icon from '../utils/Icon';
 
@@ -15,13 +13,8 @@ class CollectionCard extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  // handleClick() {
-  //   const { id } = this.props.data;
-  //   this.props.deleteCard(id);
-  // }
-
   handleClick(e) {
-    const { data, deleteCard, history } = this.props;
+    const { data, history } = this.props;
     const target = e.target.classList;
 
     if (target.contains('delete-button')) {
@@ -35,12 +28,10 @@ class CollectionCard extends React.Component {
   }
 
   render() {
-    const { data, deleteCard, number } = this.props;
-    const { id } = this.props.data;
+    const { data, number } = this.props;
 
     return (
       <div onClick={this.handleClick}>
-        {/* <Link to={{ pathname: '/form', state: { data } }}> */}
         <div className="collection-card">
           <div className="card-count">{number + 1}</div>
           <div className="card-term">
@@ -53,19 +44,18 @@ class CollectionCard extends React.Component {
             <Icon icon="delete" />
           </button>
         </div>
-        {/* </Link> */}
       </div>
     );
   }
 }
 
 CollectionCard.propTypes = {
+  history: PropTypes.object, // eslint-disable-line
   data: PropTypes.shape({
     term: PropTypes.string,
     definition: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  number: PropTypes.number.isRequired
 };
-
-// export default connect(null, { deleteCard })(CollectionCard);
 
 export default withRouter(connect(null, { deleteCard })(CollectionCard));

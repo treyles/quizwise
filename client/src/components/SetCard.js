@@ -1,7 +1,7 @@
-/* eslint-disable */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Icon from '../utils/Icon';
 
 import { deleteSet } from '../actions/';
@@ -9,17 +9,11 @@ import { deleteSet } from '../actions/';
 class SetCard extends Component {
   constructor(props) {
     super(props);
-    // this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
-  // handleDeleteClick() {
-  //   const { deleteSet, data } = this.props;
-  //   deleteSet(data.id);
-  // }
-
   handleClick(e) {
-    const { deleteSet, data, history } = this.props;
+    const { data, history } = this.props;
     const t = e.target.classList;
 
     if (t.contains('set-card')) {
@@ -45,40 +39,40 @@ class SetCard extends Component {
     const { data } = this.props;
 
     return (
-      // TODO: dont need fragment?
-      <React.Fragment>
-        <div className="set-card" onClick={this.handleClick}>
-          <div className="name-container">
-            <h5 className="set-count">
-              {data.terms ? `${data.terms} TERMS` : 'EMPTY'}
-            </h5>
-            <h3>{data.name}</h3>
-          </div>
-          <button className="delete-button">
-            <Icon icon="delete" />
-          </button>
-          <span className="decoration">
-            <div />
-            <div />
-          </span>
-          {data.terms > 1 ? (
-            <button className="session-button">STUDY SESSION</button>
-          ) : (
-            <h5 className="hint">
-              Add {data.terms < 1 ? '2 terms' : '1 term'} to unlock study
-              session
-            </h5>
-          )}
+      <div className="set-card" onClick={this.handleClick}>
+        <div className="name-container">
+          <h5 className="set-count">
+            {data.terms ? `${data.terms} TERMS` : 'EMPTY'}
+          </h5>
+          <h3>{data.name}</h3>
         </div>
-      </React.Fragment>
+        <button className="delete-button">
+          <Icon icon="delete" />
+        </button>
+        <span className="decoration">
+          <div />
+          <div />
+        </span>
+        {data.terms > 1 ? (
+          <button className="session-button">STUDY SESSION</button>
+        ) : (
+          <h5 className="hint">
+            Add {data.terms < 1 ? '2 terms' : '1 term'} to unlock study
+            session
+          </h5>
+        )}
+      </div>
     );
   }
 }
 
-// export default SetCard;
-
-// const mapStateToProps = state => ({
-//   sets: state.data.sets
-// });
+SetCard.propTypes = {
+  history: PropTypes.object, // eslint-disable-line
+  data: PropTypes.shape({
+    id: PropTypes.number,
+    terms: PropTypes.number,
+    name: PropTypes.string
+  }).isRequired
+};
 
 export default withRouter(connect(null, { deleteSet })(SetCard));

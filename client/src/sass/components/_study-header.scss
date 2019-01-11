@@ -6,10 +6,11 @@
   align-items: center;
   height: 90px;
   background: transparent;
-  padding: 0 2.1875rem;
+  padding: 0 1.25rem;
 
   @include desktop {
-    height: 134px;
+    padding: 0 2.1875rem;
+    align-items: flex-end;
   }
 
   a {
@@ -39,22 +40,12 @@
     justify-content: flex-start;
 
     .back-container {
-      // position: absolute;
-      // top: 1.25rem;
-      // left: 1.25rem;
       display: flex;
       align-items: center;
-      height: 4.3125rem;
       font-family: 'apercubold', sans-serif;
       letter-spacing: 0.1rem;
       color: #fff;
       cursor: pointer;
-
-      // @include desktop {
-      //   position: static;
-      //   display: flex;
-      //   align-items: center;
-      // }
 
       h5 {
         display: none;
@@ -78,6 +69,8 @@
   }
 
   .title {
+    flex-grow: 2;
+
     h4 {
       color: #fff;
       font-family: 'apercuregular', sans-serif;
@@ -91,21 +84,36 @@
     justify-content: flex-end;
 
     button {
-      font-family: inherit;
-      padding: 11px 0;
+      border-radius: 500px;
       border: 0;
       color: #fff;
       outline: none;
-      width: 102px;
-      height: 36px;
-      border-radius: 4px;
-      letter-spacing: 0.1rem;
       background: $dark-button;
+      font-family: inherit;
+      letter-spacing: 0.1rem;
+      width: 80px;
+      height: 37px;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       cursor: pointer;
       transition: 0.3s ease;
 
-      &:hover {
-        background: darken($dark-button, 10%);
+      h5 {
+        font-size: 0.6rem;
+      }
+
+      @include desktop {
+        padding: 11px 0;
+        width: 102px;
+        height: 36px;
+        border-radius: 4px;
+
+        h5 {
+          font-size: 0.75rem;
+        }
+
+        &:hover {
+          background: darken($dark-button, 10%);
+        }
       }
     }
   }
