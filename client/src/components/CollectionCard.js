@@ -9,7 +9,6 @@ import { deleteCard } from '../actions/';
 class CollectionCard extends React.Component {
   constructor(props) {
     super(props);
-
     this.handleClick = this.handleClick.bind(this);
   }
 

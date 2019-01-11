@@ -1,24 +1,17 @@
 const router = require('express').Router();
-var path = require('path');
 const { Pool } = require('pg');
-// const uuidv1 = require('uuid/v1');
-const c = require('./variables');
+// const c = require('./variables');
 
-const pool = new Pool({
-  user: c.user,
-  password: c.password,
-  database: c.database,
-  host: c.host,
-  port: 5432,
-  ssl: true
-});
-
-// // fetch all todos
-// router.get('/api/todos', (req, res) => {
-//   Todo.find({})
-//     .then(results => res.json(results))
-//     .catch(() => res.sendStatus(500));
+// const pool = new Pool({
+//   user: c.user,
+//   password: c.password,
+//   database: c.database,
+//   host: c.host,
+//   port: 5432,
+//   ssl: true
 // });
+
+const pool = new Pool({ connectionString: DATABASE_URL });
 
 router.get('/sets', (req, res) => {
   pool
@@ -38,7 +31,6 @@ router.get('/sets/:id', (req, res) => {
 
 router.get('/collection/:id', (req, res) => {
   const id = parseInt(req.params.id);
-  // const testPath = path.join(__dirname + '/../client/dist/index.html');
 
   pool
     .query('SELECT * FROM cards WHERE set = $1 ORDER BY id DESC', [id])
@@ -46,7 +38,6 @@ router.get('/collection/:id', (req, res) => {
     .catch(e => console.error(e));
 });
 
-// get single card by id
 router.get('/cards/:id', (req, res) => {
   const id = parseInt(req.params.id);
 
