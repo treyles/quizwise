@@ -1,8 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-module.exports = {
+const config = {
   entry: './src/index.js',
   devtool: 'cheap-eval-source-map',
   output: {
@@ -58,6 +59,14 @@ module.exports = {
     }),
     new ExtractTextWebpackPlugin('styles/main.css', {
       allChunks: true
-    })
+    }),
+    new BundleAnalyzerPlugin()
   ]
 };
+
+// remove source maps when building for production
+if (process.env.NODE_ENV === 'production') {
+  config.devtool = false;
+}
+
+module.exports = config;
