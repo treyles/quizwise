@@ -85,6 +85,7 @@
     background: transparent;
     transition: 0.2s ease;
     outline: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     cursor: pointer;
 
     svg {

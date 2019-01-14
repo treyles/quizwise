@@ -20,10 +20,6 @@ import {
 } from '../actions';
 
 class StudySession extends React.Component {
-  static handleDisableScroll(e) {
-    e.preventDefault();
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -72,6 +68,10 @@ class StudySession extends React.Component {
     document.removeEventListener('keydown', this.handleKeyPress);
 
     this.props.clearSession();
+  }
+
+  handleDisableScroll(e) {
+    e.preventDefault();
   }
 
   handleKeyPress(e) {
