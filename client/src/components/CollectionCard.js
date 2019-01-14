@@ -13,7 +13,7 @@ class CollectionCard extends React.Component {
   }
 
   handleClick(e) {
-    const { data, history } = this.props;
+    const { data, history, deleteCard } = this.props;
     const target = e.target.classList;
 
     if (target.contains('delete-button')) {
@@ -54,7 +54,8 @@ CollectionCard.propTypes = {
     term: PropTypes.string,
     definition: PropTypes.string
   }).isRequired,
-  number: PropTypes.number.isRequired
+  number: PropTypes.number.isRequired,
+  deleteCard: PropTypes.func.isRequired
 };
 
 export default withRouter(connect(null, { deleteCard })(CollectionCard));

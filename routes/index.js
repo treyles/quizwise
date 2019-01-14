@@ -1,17 +1,10 @@
 const router = require('express').Router();
 const { Pool } = require('pg');
-// const c = require('./variables');
 
-// const pool = new Pool({
-//   user: c.user,
-//   password: c.password,
-//   database: c.database,
-//   host: c.host,
-//   port: 5432,
-//   ssl: true
-// });
-
-const pool = new Pool({ connectionString: DATABASE_URL });
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true
+});
 
 router.get('/sets', (req, res) => {
   pool

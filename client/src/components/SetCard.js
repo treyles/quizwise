@@ -13,7 +13,7 @@ class SetCard extends Component {
   }
 
   handleClick(e) {
-    const { data, history } = this.props;
+    const { data, history, deleteSet } = this.props;
     const t = e.target.classList;
 
     if (t.contains('set-card')) {
@@ -72,7 +72,8 @@ SetCard.propTypes = {
     id: PropTypes.number,
     terms: PropTypes.number,
     name: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  deleteSet: PropTypes.func.isRequired
 };
 
 export default withRouter(connect(null, { deleteSet })(SetCard));

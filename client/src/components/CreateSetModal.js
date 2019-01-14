@@ -54,7 +54,7 @@ class CreateSetModal extends Component {
   }
 
   handleClickSave() {
-    const { closeModal } = this.props;
+    const { closeModal, fetchSets } = this.props;
     const { name } = this.state;
 
     // check if at least one character that is not whitespace
@@ -104,7 +104,8 @@ class CreateSetModal extends Component {
 }
 
 CreateSetModal.propTypes = {
-  closeModal: PropTypes.func.isRequired
+  closeModal: PropTypes.func.isRequired,
+  fetchSets: PropTypes.func.isRequired
 };
 
 export default connect(null, { fetchSets })(CreateSetModal);

@@ -16,6 +16,7 @@
   },
   "rules": {
     "default-case": "off",
+    "no-shadow": "warn",
     "jsx-a11y/anchor-is-valid": "off",
     "react/jsx-curly-brace-presence": "off",
     "react/no-array-index-key": "warn",

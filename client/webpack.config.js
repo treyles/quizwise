@@ -59,8 +59,8 @@ const config = {
     }),
     new ExtractTextWebpackPlugin('styles/main.css', {
       allChunks: true
-    }),
-    new BundleAnalyzerPlugin()
+    })
+    // new BundleAnalyzerPlugin()
   ]
 };
 
