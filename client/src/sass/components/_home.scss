@@ -17,6 +17,7 @@
   h1 {
     display: none;
     color: #fff;
+    cursor: default;
 
     @include desktop {
       display: block;
