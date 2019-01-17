@@ -9,6 +9,7 @@ import { fetchCollection } from '../actions/';
 
 class Collection extends React.Component {
   componentDidMount() {
+    window.scrollTo(0, 0);
     const routerState = this.props.location.state;
     this.props.fetchCollection(routerState.id);
   }

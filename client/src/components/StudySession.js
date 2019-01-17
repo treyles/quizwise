@@ -91,7 +91,7 @@ class StudySession extends React.Component {
     }
   }
 
-  handleOnSwiping(e, deltaX) {
+  handleOnSwiping(e, deltaX, deltaY, absX, absY, velocity) {
     const cardWidth = this.swipable.element.clientWidth;
     const maxMove = cardWidth / 2;
     const animationValue = Math.abs(deltaX) / maxMove;
@@ -112,18 +112,18 @@ class StudySession extends React.Component {
       moveLeft: -deltaX,
       nextOpacity: opacityValue,
       nextScale: scaleValue,
-      currentRotation: rotationDirection
+      currentRotation: rotationDirection,
+      velocity
     });
   }
 
-  handleOnSwiped(e, deltaX, deltaY, isFlick, velocity) {
+  handleOnSwiped() {
     this.setState({
       isDragging: false,
       moveLeft: 0,
       nextOpacity: 0,
       nextScale: 0.8,
-      currentRotation: 0,
-      velocity
+      currentRotation: 0
     });
   }
 
